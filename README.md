@@ -1,7 +1,7 @@
 Z-Tree Subject Payment Printer
 ==============================
 
-What is Z-Tree Subject Payment Printer?
+What is the Z-Tree Subject Payment Printer?
 ---------------------------------------
 The Z-Tree payment printer reads in a Z-Tree payment file, and
 generates a pdf document containing all subject payments (one per page)  
