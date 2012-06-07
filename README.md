@@ -1,9 +1,9 @@
-Z-Tree Subject Payment Printer
+CESS Payment Printer
 ==============================
 
-What is the Z-Tree Subject Payment Printer?
+What is the CESS Payment Printer?
 ---------------------------------------
-The Z-Tree payment printer reads in a Z-Tree payment file, and
+The CESS Payment Printer reads in a Z-Tree payment file, and
 generates a pdf document containing all subject payments (one per page)  
 in dollars and words with the subject alias on the bottom for identification.
 
