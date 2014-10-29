@@ -14,7 +14,7 @@ public class PaymentPrinterPanel extends JPanel {
     private JButton openPaymentFileButton, paymentFileToVoucherButton;
     private JLabel statusLabel;
     private JFileChooser fileChooser;
-    
+	private ConfigurationFile config;
     private int verticalShift;
     private int horizontalShift;
     
@@ -31,10 +31,15 @@ public class PaymentPrinterPanel extends JPanel {
     	GridBagConstraints constraint; 
 
         // find configuration file for the default path
-        ConfigurationFile configurationFile = new ConfigurationFile();
-        String defaultPath = configurationFile.read();
+    	try {
+	        this.config = new ConfigurationFile();
+    	} catch (IOException e) {
+    		JOptionPane.showMessageDialog(this, 
+    				"Failed to locate the configuration file config.properties. This file is needed to run this program.");
+    		return;
+    	}
         
-        fileChooser = new JFileChooser(defaultPath);
+        fileChooser = new JFileChooser(config.getPath());
         
         ImageIcon infoIcon = createImageIcon("/resources/images/info.png", "info");
         this.statusLabel = new JLabel(infoIcon);

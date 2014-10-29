@@ -1,43 +1,24 @@
 package edu.nyu.cess.PaymentPrinter;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.util.Properties;
 
 public class ConfigurationFile {
-	private String fileName = "payment_generator.conf";
-	final int LOCATION = 1;
+	private String fileName = "config.properties";
+	private String path;
+	public ConfigurationFile() throws IOException {
+		read();
+	}
 	
-	public String read() {
-		File configFile = new File(this.fileName);
-		String configurationInfo[];
-		String defaultPath = "";
-		
-
-		try {
-			BufferedReader bufferedReader = new BufferedReader(new FileReader(configFile));
-			System.out.println("Reading parameters from: " + configFile.getAbsolutePath());
-
-			String line = bufferedReader.readLine();
-			configurationInfo = line.split("=");
-			if (configurationInfo.length != 2) {
-				return defaultPath;
-			}
-			
-			defaultPath = configurationInfo[LOCATION];
-			bufferedReader.close();
-		} catch (FileNotFoundException ex) {
-			System.err.println("File not found." + ex.getMessage());
-			return defaultPath;
-		} catch (IOException ex) {
-			System.err.println("IO Exception Occured.");
-			return defaultPath;
-		}
-		
-		return defaultPath;
-
+	public void read() throws IOException {
+		Properties properties = new Properties();
+		properties.load(new FileInputStream(this.fileName));
+		this.path = properties.getProperty("path");
 	}
 
+	public String getPath() {
+		System.out.println(this.path);
+		return this.path;
+	}
 }
