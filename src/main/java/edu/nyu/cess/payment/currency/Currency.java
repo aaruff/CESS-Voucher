@@ -1,4 +1,4 @@
-package edu.nyu.cess.payment;
+package edu.nyu.cess.payment.currency;
 
 public interface Currency {
 	public String getInWords();

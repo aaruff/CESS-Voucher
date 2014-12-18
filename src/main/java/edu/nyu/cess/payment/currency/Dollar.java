@@ -1,8 +1,9 @@
-package edu.nyu.cess.payment;
+package edu.nyu.cess.payment.currency;
 
 import java.util.HashMap;
 
-public class Dollar implements Currency {
+public class Dollar implements Currency
+{
 	private Double amount;
 	private String symbol = "$";
 	private String type = "Dollars";
