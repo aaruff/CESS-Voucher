@@ -1,4 +1,4 @@
-package edu.nyu.cess.payment;
+package edu.nyu.cess.payment.io;
 
 import java.io.FileInputStream;
 import java.io.IOException;
