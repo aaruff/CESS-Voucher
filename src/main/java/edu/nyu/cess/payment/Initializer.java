@@ -25,11 +25,11 @@ public class Initializer {
         
         
         //Add content to the window.
-        PaymentFileConverter paymentFileConverter = new PaymentFileConverter();
-        PaymentPrinterPanel paymentPrinterPanel = new PaymentPrinterPanel(paymentFileConverter);
-        PaymentPrinterMenu menu = new PaymentPrinterMenu(frame, paymentPrinterPanel);
+        FileConverter fileConverter = new FileConverter();
+        PrinterPanel printerPanel = new PrinterPanel(fileConverter);
+        PrinterMenu menu = new PrinterMenu(frame, printerPanel);
         //paymentPrinterPanel.setSize(500, 270);
-        frame.add(paymentPrinterPanel);
+        frame.add(printerPanel);
         frame.setJMenuBar(menu.getJMenuBar());
 
         //Display the window.
