@@ -1,4 +1,6 @@
-package edu.nyu.cess.payment;
+package edu.nyu.cess.payment.ztree;
+
+import edu.nyu.cess.payment.Payoff;
 
 public class Subject {
 	
