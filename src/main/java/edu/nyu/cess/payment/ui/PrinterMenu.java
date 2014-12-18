@@ -1,4 +1,4 @@
-package edu.nyu.cess.payment;
+package edu.nyu.cess.payment.ui;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;

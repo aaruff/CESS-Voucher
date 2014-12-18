@@ -1,6 +1,7 @@
-package edu.nyu.cess.payment;
+package edu.nyu.cess.payment.ui;
 
 import edu.nyu.cess.payment.io.ConfigurationFile;
+import edu.nyu.cess.payment.io.FileConverter;
 
 import javax.swing.*;
 import java.awt.*;
