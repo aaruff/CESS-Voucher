@@ -1,7 +1,5 @@
 package edu.nyu.cess.payment.ui;
 
-import edu.nyu.cess.payment.PrinterPanel;
-
 import javax.swing.*;
 import java.awt.event.*;
 import java.beans.PropertyChangeEvent;
