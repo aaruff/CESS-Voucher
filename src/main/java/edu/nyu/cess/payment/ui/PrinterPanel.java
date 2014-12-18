@@ -2,31 +2,32 @@ package edu.nyu.cess.payment.ui;
 
 import edu.nyu.cess.payment.io.ConfigurationFile;
 import edu.nyu.cess.payment.io.FileConverter;
+import edu.nyu.cess.payment.ui.listeners.ConvertPaymentFileListener;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.io.File;
 import java.io.IOException;
 
-public class PrinterPanel extends JPanel {
-
+public class PrinterPanel extends JPanel
+{
 	private static final long serialVersionUID = 2853708307420292816L;
 	
     private JButton openPaymentFileButton, paymentFileToVoucherButton;
     private JLabel statusLabel;
     private JFileChooser fileChooser;
 	private ConfigurationFile config;
-    private int verticalShift;
-    private int horizontalShift;
+
+    private int verticalShift = 0;
+    private int horizontalShift = 0;
+
+	private static String INFO_ICON_PATH = "/images/info.png";
+	private static String FILE_OPEN_ICON_PATH = "/images/file_open.png";
+	private static String PDF_ICON_PATH = "/images/pdf_ico.png";
+	private static String CESS_ICON_PATH = "/images/cess.png";
+
+    protected FileConverter fileConverter = new FileConverter();
     
-    protected FileConverter fileConverter;
-    
-    public PrinterPanel(FileConverter fileConverter) {
-    	this.fileConverter = fileConverter;
-    	this.verticalShift = 0;
-    	this.horizontalShift = 0;
+    public PrinterPanel() {
     	init();
     }
     
@@ -43,7 +44,9 @@ public class PrinterPanel extends JPanel {
     	}
         
         fileChooser = new JFileChooser(config.getPath());
-        
+
+
+
         ImageIcon infoIcon = createImageIcon("/resources/images/info.png", "info");
         this.statusLabel = new JLabel(infoIcon);
 		this.statusLabel.setForeground(Color.BLACK);
@@ -109,18 +112,6 @@ public class PrinterPanel extends JPanel {
         add(fileSelectionPanel, BorderLayout.PAGE_START);
     }
     
-    /** Returns an ImageIcon, or null if the path was invalid. */
-    protected ImageIcon createImageIcon(String path,
-                                               String description) {
-        java.net.URL imgURL = getClass().getResource(path);
-        if (imgURL != null) {
-            return new ImageIcon(imgURL, description);
-        } else {
-            System.err.println("Couldn't find file: " + path);
-            return null;
-        }
-    }
-    
     public void setHorizontalShift(int horizontalShift){
     	this.horizontalShift = horizontalShift;
     }
@@ -128,92 +119,5 @@ public class PrinterPanel extends JPanel {
     public void setVerticalShift(int verticalShift){
     	this.verticalShift = verticalShift;
     }
-    
-    private class OpenPaymentFileListener implements ActionListener{
 
-		@Override
-		public void actionPerformed(ActionEvent e) {
-            int returnVal = fileChooser.showOpenDialog(PrinterPanel.this);
-
-            if (returnVal != JFileChooser.APPROVE_OPTION) {
-		        ImageIcon infoIcon = createImageIcon("/resources/images/info.png", "info");
-		        statusLabel.setIcon(infoIcon);
-				statusLabel.setForeground(Color.BLACK);
-		        statusLabel.setText("Select \"Open File\" to set your payment file.");
-            	return;
-            }
-            
-            File file = fileChooser.getSelectedFile();
-            String extension = getExtension(file);
-            
-            if(file.isDirectory() || !extension.equals("pay")){
-				statusLabel.setForeground(Color.RED);
-		        ImageIcon errorIcon = createImageIcon("/resources/images/error.png", "error");
-				statusLabel.setIcon(errorIcon);
-                statusLabel.setText("Error: Invalid format. Please select a Z-Tree (file-name.pay) payoff file.");
-                return;
-            }
-            
-            fileConverter.setFileInfo(file.getPath());
-	        ImageIcon infoIcon = createImageIcon("/resources/images/info.png", "info");
-	        statusLabel.setIcon(infoIcon);
-			statusLabel.setForeground(Color.BLACK);
-			statusLabel.setText("Opened: " + file.getName());
-		}
-		
-	    private String getExtension(File f) {
-	        String ext = null;
-	        String s = f.getName();
-	        int i = s.lastIndexOf('.');
-	
-	        if (i > 0 &&  i < s.length() - 1) {
-	            ext = s.substring(i+1).toLowerCase();
-	        }
-	       return ext;
-	    }
-    }
-    
-    
-    private class ConvertPaymentFileListener implements ActionListener{
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			if(!fileConverter.isFileInfoSet()){
-				statusLabel.setForeground(Color.RED);
-		        ImageIcon errorIcon = createImageIcon("/resources/images/error.png", "error");
-				statusLabel.setIcon(errorIcon);
-                statusLabel.setText("Error: Please select \"Open File\" first.");
-                return;
-			}
-			
-			if(!fileConverter.convertPaymentToVoucherPDF(horizontalShift, verticalShift)){
-		        ImageIcon errorIcon = createImageIcon("/resources/images/error.png", "error");
-				statusLabel.setIcon(errorIcon);
-				statusLabel.setForeground(Color.RED);
-                statusLabel.setText("Error: Failed to convert payment file, check format.");
-                return;
-			}
-			
-			if (Desktop.isDesktopSupported()) {
-			    try {
-			        File myFile = new File(fileConverter.getPDFLocation());
-			        Desktop.getDesktop().open(myFile);
-			    } catch (IOException ex) {
-			        ImageIcon errorIcon = createImageIcon("/resources/images/error.png", "error");
-					statusLabel.setIcon(errorIcon);
-					statusLabel.setForeground(Color.RED);
-	                statusLabel.setText("Error: Unable to auto open File ("+ fileConverter.getPDFName()+".pdf)");
-			    }
-			}
-
-			
-	        ImageIcon infoIcon = createImageIcon("/resources/images/info.png", "info");
-	        statusLabel.setIcon(infoIcon);
-			statusLabel.setText("");
-            statusLabel.setText("Output File: " + fileConverter.getPDFName()+".pdf");
-		}
-    	
-    }
 }
-	
-
-
