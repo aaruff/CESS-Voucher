@@ -1,4 +1,7 @@
-package edu.nyu.cess.payment;
+package edu.nyu.cess.payment.io;
+
+import edu.nyu.cess.payment.PDFGenerator;
+import edu.nyu.cess.payment.ztree.Subject;
 
 import javax.print.*;
 import javax.print.attribute.HashPrintRequestAttributeSet;
@@ -14,7 +17,7 @@ public class FileConverter
 	private String payoffFilePath;
 	
 	public FileConverter(){
-		this.payoffFilePath = "";
+		payoffFilePath = "";
 	}
 	
 	public String getPDFLocation(){
