@@ -1,18 +1,11 @@
-package edu.nyu.cess.payment;
+package edu.nyu.cess.payment.ui;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.ComponentAdapter;
-import java.awt.event.ComponentEvent;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
+import edu.nyu.cess.payment.PrinterPanel;
+
+import javax.swing.*;
+import java.awt.event.*;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-
-import javax.swing.JDialog;
-import javax.swing.JFrame;
-import javax.swing.JOptionPane;
-import javax.swing.JTextField;
 
 /* 1.4 example used by DialogDemo.java. */
 class CustomDialog extends JDialog
@@ -20,7 +13,7 @@ class CustomDialog extends JDialog
                               PropertyChangeListener {
     private String typedText = null;
     private JTextField textField;
-    private PaymentPrinterPanel dd;
+    private PrinterPanel dd;
 
     private String magicWord;
     private JOptionPane optionPane;
@@ -37,7 +30,7 @@ class CustomDialog extends JDialog
     }
 
     /** Creates the reusable dialog. */
-    public CustomDialog(JFrame aFrame, String aWord, PaymentPrinterPanel parent) {
+    public CustomDialog(JFrame aFrame, String aWord, PrinterPanel parent) {
         super(aFrame, true);
         dd = parent;
 
