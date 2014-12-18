@@ -1,5 +1,8 @@
 package edu.nyu.cess.payment;
 
+import edu.nyu.cess.payment.currency.Currency;
+import edu.nyu.cess.payment.currency.Dollar;
+
 public class Payoff {
 	private Currency amount;
 	

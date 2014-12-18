@@ -1,5 +1,7 @@
 package edu.nyu.cess.payment;
 
+import edu.nyu.cess.payment.currency.Dollar;
+
 import java.util.regex.Pattern;
 
 public class UnitTester {
