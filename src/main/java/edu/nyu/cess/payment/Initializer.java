@@ -1,5 +1,9 @@
 package edu.nyu.cess.payment;
 
+import edu.nyu.cess.payment.io.FileConverter;
+import edu.nyu.cess.payment.ui.PrinterPanel;
+import edu.nyu.cess.payment.ui.PrinterMenu;
+
 import javax.swing.*;
 
 public class Initializer {
