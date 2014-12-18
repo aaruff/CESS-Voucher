@@ -1,4 +1,4 @@
-package edu.nyu.cess.PaymentPrinter;
+package edu.nyu.cess.payment;
 
 public class Payoff {
 	private Currency amount;

@@ -1,4 +1,4 @@
-package edu.nyu.cess.PaymentPrinter;
+package edu.nyu.cess.payment;
 
 import java.util.ArrayList;
 import java.io.File;
