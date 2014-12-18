@@ -1,4 +1,4 @@
-package edu.nyu.cess.payment;
+package edu.nyu.cess.payment.exceptions;
 
 public class MaxAmmountException extends Exception {
 
