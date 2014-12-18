@@ -1,13 +1,15 @@
 package edu.nyu.cess.payment;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.io.*;
-import java.awt.*;
+import edu.nyu.cess.payment.io.ConfigurationFile;
 
 import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.IOException;
 
-public class PaymentPrinterPanel extends JPanel {
+public class PrinterPanel extends JPanel {
 
 	private static final long serialVersionUID = 2853708307420292816L;
 	
@@ -18,10 +20,10 @@ public class PaymentPrinterPanel extends JPanel {
     private int verticalShift;
     private int horizontalShift;
     
-    protected PaymentFileConverter paymentFileConverter;
+    protected FileConverter fileConverter;
     
-    public PaymentPrinterPanel(PaymentFileConverter paymentFileConverter) {
-    	this.paymentFileConverter = paymentFileConverter;
+    public PrinterPanel(FileConverter fileConverter) {
+    	this.fileConverter = fileConverter;
     	this.verticalShift = 0;
     	this.horizontalShift = 0;
     	init();
@@ -130,7 +132,7 @@ public class PaymentPrinterPanel extends JPanel {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-            int returnVal = fileChooser.showOpenDialog(PaymentPrinterPanel.this);
+            int returnVal = fileChooser.showOpenDialog(PrinterPanel.this);
 
             if (returnVal != JFileChooser.APPROVE_OPTION) {
 		        ImageIcon infoIcon = createImageIcon("/resources/images/info.png", "info");
@@ -151,7 +153,7 @@ public class PaymentPrinterPanel extends JPanel {
                 return;
             }
             
-            paymentFileConverter.setFileInfo(file.getPath());
+            fileConverter.setFileInfo(file.getPath());
 	        ImageIcon infoIcon = createImageIcon("/resources/images/info.png", "info");
 	        statusLabel.setIcon(infoIcon);
 			statusLabel.setForeground(Color.BLACK);
@@ -174,7 +176,7 @@ public class PaymentPrinterPanel extends JPanel {
     private class ConvertPaymentFileListener implements ActionListener{
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			if(!paymentFileConverter.isFileInfoSet()){
+			if(!fileConverter.isFileInfoSet()){
 				statusLabel.setForeground(Color.RED);
 		        ImageIcon errorIcon = createImageIcon("/resources/images/error.png", "error");
 				statusLabel.setIcon(errorIcon);
@@ -182,7 +184,7 @@ public class PaymentPrinterPanel extends JPanel {
                 return;
 			}
 			
-			if(!paymentFileConverter.convertPaymentToVoucherPDF(horizontalShift, verticalShift)){
+			if(!fileConverter.convertPaymentToVoucherPDF(horizontalShift, verticalShift)){
 		        ImageIcon errorIcon = createImageIcon("/resources/images/error.png", "error");
 				statusLabel.setIcon(errorIcon);
 				statusLabel.setForeground(Color.RED);
@@ -192,13 +194,13 @@ public class PaymentPrinterPanel extends JPanel {
 			
 			if (Desktop.isDesktopSupported()) {
 			    try {
-			        File myFile = new File(paymentFileConverter.getPDFLocation());
+			        File myFile = new File(fileConverter.getPDFLocation());
 			        Desktop.getDesktop().open(myFile);
 			    } catch (IOException ex) {
 			        ImageIcon errorIcon = createImageIcon("/resources/images/error.png", "error");
 					statusLabel.setIcon(errorIcon);
 					statusLabel.setForeground(Color.RED);
-	                statusLabel.setText("Error: Unable to auto open File ("+paymentFileConverter.getPDFName()+".pdf)");
+	                statusLabel.setText("Error: Unable to auto open File ("+ fileConverter.getPDFName()+".pdf)");
 			    }
 			}
 
@@ -206,7 +208,7 @@ public class PaymentPrinterPanel extends JPanel {
 	        ImageIcon infoIcon = createImageIcon("/resources/images/info.png", "info");
 	        statusLabel.setIcon(infoIcon);
 			statusLabel.setText("");
-            statusLabel.setText("Output File: " + paymentFileConverter.getPDFName()+".pdf");
+            statusLabel.setText("Output File: " + fileConverter.getPDFName()+".pdf");
 		}
     	
     }

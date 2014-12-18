@@ -1,24 +1,19 @@
 package edu.nyu.cess.payment;
 
-import java.util.ArrayList;
+import javax.print.*;
+import javax.print.attribute.HashPrintRequestAttributeSet;
+import javax.print.attribute.PrintRequestAttributeSet;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
 
-import javax.print.Doc;
-import javax.print.DocFlavor;
-import javax.print.DocPrintJob;
-import javax.print.PrintService;
-import javax.print.PrintServiceLookup;
-import javax.print.SimpleDoc;
-import javax.print.attribute.HashPrintRequestAttributeSet;
-import javax.print.attribute.PrintRequestAttributeSet;
-
-public class PaymentFileConverter {
+public class FileConverter
+{
 
 	private String payoffFilePath;
 	
-	public PaymentFileConverter(){
+	public FileConverter(){
 		this.payoffFilePath = "";
 	}
 	
@@ -31,15 +26,15 @@ public class PaymentFileConverter {
 	}
 	
 	public boolean convertPaymentToVoucherPDF(int horizontalShift, int verticalShift){
-		PaymentFileReader paymentFileReader = new PaymentFileReader(this.payoffFilePath);
-		PaymentPDFGenerator paymentPDFGenerator = new PaymentPDFGenerator(this.payoffFilePath+".pdf", horizontalShift, verticalShift);
+		FileReader fileReader = new FileReader(this.payoffFilePath);
+		PDFGenerator PDFGenerator = new PDFGenerator(this.payoffFilePath+".pdf", horizontalShift, verticalShift);
 		
-		ArrayList<Subject> subjects = paymentFileReader.getSubjects();
+		ArrayList<Subject> subjects = fileReader.getSubjects();
 	
 		if(subjects.size() == 0){
 			System.out.println("No subjects found.");
 		}
-		boolean result = paymentPDFGenerator.generateDocument(subjects);
+		boolean result = PDFGenerator.generateDocument(subjects);
 		
 		if(!result){
 			System.out.println("Faled to generate pdf document.");

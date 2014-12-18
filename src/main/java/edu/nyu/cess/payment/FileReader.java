@@ -6,20 +6,21 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 
-public class PaymentFileReader {
+public class FileReader
+{
 	private String filePath;
 	private boolean debugging = true;
 	
-	public PaymentFileReader(String filePath){
+	public FileReader(String filePath){
 		this.filePath = filePath;
 	}
 	
 	public ArrayList<Subject> getSubjects(){
 		ArrayList<Subject> subjects = new ArrayList<Subject>();
 		
-		FileReader fileReader;
+		java.io.FileReader fileReader;
 		try{
-			fileReader = new FileReader(this.filePath);
+			fileReader = new java.io.FileReader(this.filePath);
 		}catch(FileNotFoundException fileNotFoundException){
 			if(this.debugging){
 				System.out.print("FileNotFound Exception: " + fileNotFoundException.getMessage());

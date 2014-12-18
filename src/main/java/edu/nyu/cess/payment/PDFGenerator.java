@@ -12,30 +12,31 @@ import com.itextpdf.text.pdf.BaseFont;
 import com.itextpdf.text.pdf.PdfContentByte;
 import com.itextpdf.text.pdf.PdfWriter;
 
-public class PaymentPDFGenerator {
+public class PDFGenerator
+{
 	private Document document;
 	private String outputFile;
 	private int verticalShift;
 	private int horizontalShift;
 	
-	public PaymentPDFGenerator(){
+	public PDFGenerator(){
 		this.document = new Document(PageSize.A4, 50, 50, 50, 50);
 		this.verticalShift = 0;
 		this.horizontalShift = 0;
 	}
-	public PaymentPDFGenerator(int horizontalShift, int verticalShift){
+	public PDFGenerator(int horizontalShift, int verticalShift){
 		this.verticalShift = verticalShift;
 		this.horizontalShift = horizontalShift; 
 	}
 	
-	public PaymentPDFGenerator(String outputFile){
+	public PDFGenerator(String outputFile){
 		this.verticalShift = 0;
 		this.horizontalShift = 0;
 		this.outputFile = outputFile;
 		this.document = new Document(PageSize.A4, 50, 50, 50, 50);
 	}
 	
-	public PaymentPDFGenerator(String outputFile, int horizontalShift, int verticalShift){
+	public PDFGenerator(String outputFile, int horizontalShift, int verticalShift){
 		this.verticalShift = verticalShift;
 		this.horizontalShift = horizontalShift;
 		this.outputFile = outputFile;
