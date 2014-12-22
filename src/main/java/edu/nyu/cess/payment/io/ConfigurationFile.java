@@ -14,6 +14,7 @@ public class ConfigurationFile
 {
 	private String fileName = "config.properties";
 	private Properties properties;
+
 	private static final Logger LOG = Logger.getLogger(ConfigurationFile.class);
 
 	/**
@@ -39,13 +40,10 @@ public class ConfigurationFile
 	 *
 	 * @return the path
      */
-	public String getPath()
+	public String getPayoffPath()
 	{
     	String path = properties.getProperty("path");
 
-		if (path == null)
-			return "";
-
-		return path;
+		return (path == null) ? "" : path;
 	}
 }
