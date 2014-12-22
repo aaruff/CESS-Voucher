@@ -11,26 +11,30 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 
-public class FileConverter
+public class ZTreePayFileConverter
 {
 
 	private String payoffFilePath;
 	
-	public FileConverter(){
+	public ZTreePayFileConverter()
+	{
 		payoffFilePath = "";
 	}
 	
-	public String getPDFLocation(){
+	public String getPDFLocation()
+	{
 		return this.payoffFilePath + ".pdf";
 	}
 	
-	public String getPDFName(){
+	public String getPDFName()
+	{
 		return (new File(this.payoffFilePath)).getName();
 	}
 	
-	public boolean convertPaymentToVoucherPDF(int horizontalShift, int verticalShift){
+	public boolean convertPaymentToVoucherPDF()
+	{
 		FileReader fileReader = new FileReader(this.payoffFilePath);
-		PDFGenerator PDFGenerator = new PDFGenerator(this.payoffFilePath+".pdf", horizontalShift, verticalShift);
+		PDFGenerator PDFGenerator = new PDFGenerator(this.payoffFilePath+".pdf");
 		
 		ArrayList<Subject> subjects = fileReader.getSubjects();
 	
@@ -40,13 +44,14 @@ public class FileConverter
 		boolean result = PDFGenerator.generateDocument(subjects);
 		
 		if(!result){
-			System.out.println("Faled to generate pdf document.");
+			System.out.println("Failed to generate pdf document.");
 			return false;
 		}
 		return true;
 	}
 	
-	public boolean printVouchers(String fileToPrint){
+	public boolean printVouchers(String fileToPrint)
+	{
 		FileInputStream psStream;
         try {  
             psStream = new FileInputStream(fileToPrint);  
@@ -89,11 +94,13 @@ public class FileConverter
         }  
 	}
 	
-	public void setFileInfo(String payoffFilePath){
+	public void setFileInfo(String payoffFilePath)
+	{
 		this.payoffFilePath = payoffFilePath;
 	}
 	
-	public boolean isFileInfoSet(){
+	public boolean isFileInfoSet()
+	{
 		return !this.payoffFilePath.equals("");
 	}
 }
