@@ -1,4 +1,4 @@
-package edu.nyu.cess.payment.io;
+package edu.nyu.cess.payment.ui;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
