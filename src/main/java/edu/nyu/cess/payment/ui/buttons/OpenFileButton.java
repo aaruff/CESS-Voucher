@@ -1,6 +1,6 @@
 package edu.nyu.cess.payment.ui.buttons;
 
-import edu.nyu.cess.payment.io.IconFactory;
+import edu.nyu.cess.payment.ui.IconFactory;
 
 import javax.swing.*;
 import java.awt.*;
