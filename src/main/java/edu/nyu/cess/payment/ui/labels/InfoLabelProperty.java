@@ -17,8 +17,18 @@ public class InfoLabelProperty extends LabelProperty
      */
     public InfoLabelProperty()
     {
+        init("Select \"Open File\" to set your payment file.");
+    }
+
+    public InfoLabelProperty(String labelText)
+    {
+        init(labelText);
+    }
+
+    private void init(String labelText)
+    {
+        this.labelText = labelText;
         imageIcon = IconFactory.createImageIcon(iconPath, iconDescription);
-        labelText = "Select \"Open File\" to set your payment file.";
         fontColor =  Color.BLACK;
     }
 }
