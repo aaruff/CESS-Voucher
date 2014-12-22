@@ -1,8 +1,8 @@
 package edu.nyu.cess.payment.ui.listeners;
 
 import edu.nyu.cess.payment.io.ConfigurationFile;
+import edu.nyu.cess.payment.ui.StatusType;
 import edu.nyu.cess.payment.ui.ZTreePayoffFileConversionPanel;
-import edu.nyu.cess.payment.ui.labels.ErrorLabelProperty;
 
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
@@ -14,15 +14,12 @@ import java.awt.event.ActionListener;
  */
 public class OpenPaymentFileListener implements ActionListener
 {
-    private ErrorLabelProperty invalidFormatError;
-    private ZTreePayoffFileConversionPanel ZTreePayoffFileConversionPanel;
+    private ZTreePayoffFileConversionPanel conversionPanel;
     private JFileChooser fileChooser;
 
-    public OpenPaymentFileListener(ZTreePayoffFileConversionPanel ZTreePayoffFileConversionPanel)
+    public OpenPaymentFileListener(ZTreePayoffFileConversionPanel conversionPanel)
     {
-        this.ZTreePayoffFileConversionPanel = ZTreePayoffFileConversionPanel;
-
-        invalidFormatError = new ErrorLabelProperty("Error: Invalid format. Please select a Z-Tree payoff file.");
+        this.conversionPanel = conversionPanel;
 
         // File Chooser Setup
         ConfigurationFile configFile = new ConfigurationFile();
@@ -39,14 +36,14 @@ public class OpenPaymentFileListener implements ActionListener
      */
     @Override
     public void actionPerformed(ActionEvent e) {
-        int returnVal = fileChooser.showOpenDialog(ZTreePayoffFileConversionPanel);
+        int returnVal = fileChooser.showOpenDialog(conversionPanel);
 
         if (returnVal != JFileChooser.APPROVE_OPTION) {
-            ZTreePayoffFileConversionPanel.updateStatus(invalidFormatError);
+            conversionPanel.updateStatus(StatusType.ERROR, "Error: Invalid format. Please select a Z-Tree payoff file.");
             return;
         }
 
-        ZTreePayoffFileConversionPanel.updatePayFileConverter(fileChooser.getSelectedFile());
+        conversionPanel.updatePayFileConverter(fileChooser.getSelectedFile());
     }
 }
 
