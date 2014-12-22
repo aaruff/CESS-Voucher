@@ -34,8 +34,8 @@ public class ZTreePayoffFileConversionPanel extends JPanel
 
 		statusLabel = new StatusLabel(new InfoLabelProperty());
 
-		openPaymentFileButton = new OpenFileButton(new OpenPaymentFileListener(this);
-		paymentFileToVoucherButton = new CreatePDFButton(new ConvertPaymentFileListener(this);
+		openPaymentFileButton = new OpenFileButton(new OpenPaymentFileListener(this));
+		paymentFileToVoucherButton = new CreatePDFButton(new ConvertPaymentFileListener(this));
 
     	init();
     }
