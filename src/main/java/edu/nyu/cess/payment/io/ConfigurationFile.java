@@ -1,34 +1,37 @@
 package edu.nyu.cess.payment.io;
 
+import org.apache.log4j.Logger;
+
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.Properties;
 
+
 /**
  * The type Configuration file.
  */
-public class ConfigurationFile {
+public class ConfigurationFile
+{
 	private String fileName = "config.properties";
-	private String path;
+	private Properties properties;
+	private static final Logger LOG = Logger.getLogger(ConfigurationFile.class);
 
 	/**
 	 * Instantiates a new Configuration file.
 	 *
 	 * @throws IOException the iO exception
      */
-	public ConfigurationFile() throws IOException {
-		readPropertiesFile();
-	}
-
-	/**
-	 * Read properties file.
-	 *
-	 * @throws IOException the iO exception
-     */
-	public void readPropertiesFile() throws IOException {
-		Properties properties = new Properties();
-		properties.load(new FileInputStream(this.fileName));
-		this.path = properties.getProperty("path");
+	public ConfigurationFile()
+	{
+		properties = new Properties();
+		try {
+			properties.load(new FileInputStream(this.fileName));
+		}
+		catch (IOException e)
+		{
+			if (LOG.isDebugEnabled())
+                LOG.debug("Config file not found", e);
+		}
 	}
 
 	/**
@@ -36,8 +39,13 @@ public class ConfigurationFile {
 	 *
 	 * @return the path
      */
-	public String getPath() {
-		System.out.println(this.path);
-		return this.path;
+	public String getPath()
+	{
+    	String path = properties.getProperty("path");
+
+		if (path == null)
+			return "";
+
+		return path;
 	}
 }
