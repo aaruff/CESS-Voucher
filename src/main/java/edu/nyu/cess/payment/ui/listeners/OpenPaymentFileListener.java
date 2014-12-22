@@ -1,23 +1,35 @@
 package edu.nyu.cess.payment.ui.listeners;
 
-import edu.nyu.cess.payment.ui.PrinterPanel;
+import edu.nyu.cess.payment.io.ConfigurationFile;
+import edu.nyu.cess.payment.ui.ZTreePayoffFileConversionPanel;
+import edu.nyu.cess.payment.ui.labels.ErrorLabelProperty;
 
 import javax.swing.*;
-import java.awt.*;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.File;
 
 /**
  * The type Open payment file listener.
  */
-class OpenPaymentFileListener implements ActionListener
+public class OpenPaymentFileListener implements ActionListener
 {
-    private PrinterPanel printerPanel;
+    private ErrorLabelProperty invalidFormatError;
+    private ZTreePayoffFileConversionPanel ZTreePayoffFileConversionPanel;
+    private JFileChooser fileChooser;
 
-    public OpenPaymentFileListener(PrinterPanel printerPanel)
+    public OpenPaymentFileListener(ZTreePayoffFileConversionPanel ZTreePayoffFileConversionPanel)
     {
-        this.printerPanel = printerPanel;
+        this.ZTreePayoffFileConversionPanel = ZTreePayoffFileConversionPanel;
+
+        invalidFormatError = new ErrorLabelProperty("Error: Invalid format. Please select a Z-Tree payoff file.");
+
+        // File Chooser Setup
+        ConfigurationFile configFile = new ConfigurationFile();
+        fileChooser = new JFileChooser(configFile.getPayoffPath());
+        fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
+        fileChooser.addChoosableFileFilter(new FileNameExtensionFilter("Z-Tree Pay Files", "pay"));
+        fileChooser.setAcceptAllFileFilterUsed(true);
     }
 
     /**
@@ -27,49 +39,14 @@ class OpenPaymentFileListener implements ActionListener
      */
     @Override
     public void actionPerformed(ActionEvent e) {
-        int returnVal = fileChooser.showOpenDialog(printerPanel);
+        int returnVal = fileChooser.showOpenDialog(ZTreePayoffFileConversionPanel);
 
         if (returnVal != JFileChooser.APPROVE_OPTION) {
-            ImageIcon infoIcon = createImageIcon("/resources/images/info.png", "info");
-            statusLabel.setIcon(infoIcon);
-            statusLabel.setForeground(Color.BLACK);
-            statusLabel.setText("Select \"Open File\" to set your payment file.");
+            ZTreePayoffFileConversionPanel.updateStatus(invalidFormatError);
             return;
         }
 
-        File file = fileChooser.getSelectedFile();
-        String extension = getExtension(file);
-
-        if(file.isDirectory() || !extension.equals("pay")){
-            statusLabel.setForeground(Color.RED);
-            ImageIcon errorIcon = createImageIcon("/resources/images/error.png", "error");
-            statusLabel.setIcon(errorIcon);
-            statusLabel.setText("Error: Invalid format. Please select a Z-Tree (file-name.pay) payoff file.");
-            return;
-        }
-
-        fileConverter.setFileInfo(file.getPath());
-        ImageIcon infoIcon = createImageIcon("/resources/images/info.png", "info");
-        statusLabel.setIcon(infoIcon);
-        statusLabel.setForeground(Color.BLACK);
-        statusLabel.setText("Opened: " + file.getName());
-    }
-
-    /**
-     * Gets extension.
-     *
-     * @param f the f
-     * @return the extension
-     */
-    private String getExtension(File f) {
-        String ext = null;
-        String s = f.getName();
-        int i = s.lastIndexOf('.');
-
-        if (i > 0 &&  i < s.length() - 1) {
-            ext = s.substring(i+1).toLowerCase();
-        }
-        return ext;
+        ZTreePayoffFileConversionPanel.updatePayFileConverter(fileChooser.getSelectedFile());
     }
 }
 
