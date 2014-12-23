@@ -14,7 +14,7 @@ import java.io.File;
 /**
  * The type Payoff converter panel.
  */
-public class ZTreePayoffFileConversionPanel extends JPanel
+public class ZTreePayoffFileConversionPanel extends JPanel implements FileSelectionView
 {
 	private static final long serialVersionUID = 2853708307420292816L;
 
@@ -45,12 +45,20 @@ public class ZTreePayoffFileConversionPanel extends JPanel
 	 *
 	 * @return the status label
      */
+	@Override
 	public void updateStatus(StatusType statusType, String message)
 	{
 		statusLabel.updateLabel(LabelPropertyFactory.buildLabelProperty(statusType, message));
 	}
 
-	public void updatePayFileConverter(File payoffFile)
+	@Override
+	public JPanel getJPanel()
+	{
+		return this;
+	}
+
+	@Override
+	public void updateFileSelection(File payoffFile)
 	{
 		payFileConverter.setFileInfo(payoffFile.getPath());
 		updateStatus(StatusType.INFO, "Opened: " + payoffFile.getName());
