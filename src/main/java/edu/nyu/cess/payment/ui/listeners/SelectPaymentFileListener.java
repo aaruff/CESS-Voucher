@@ -1,8 +1,8 @@
 package edu.nyu.cess.payment.ui.listeners;
 
 import edu.nyu.cess.payment.io.ConfigurationFile;
+import edu.nyu.cess.payment.ui.FileSelectionObserver;
 import edu.nyu.cess.payment.ui.StatusType;
-import edu.nyu.cess.payment.ui.ZTreePayoffFileConversionPanel;
 
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
@@ -10,18 +10,17 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 /**
- * The type Open payment file listener.
+ * The payment file selection listener.
  */
-public class OpenPaymentFileListener implements ActionListener
+public class SelectPaymentFileListener implements ActionListener
 {
-    private ZTreePayoffFileConversionPanel conversionPanel;
+    private FileSelectionObserver view;
     private JFileChooser fileChooser;
 
-    public OpenPaymentFileListener(ZTreePayoffFileConversionPanel conversionPanel)
+    public SelectPaymentFileListener(FileSelectionObserver view)
     {
-        this.conversionPanel = conversionPanel;
+        this.view = view;
 
-        // File Chooser Setup
         ConfigurationFile configFile = new ConfigurationFile();
         fileChooser = new JFileChooser(configFile.getPayoffPath());
         fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
@@ -36,14 +35,13 @@ public class OpenPaymentFileListener implements ActionListener
      */
     @Override
     public void actionPerformed(ActionEvent e) {
-        int returnVal = fileChooser.showOpenDialog(conversionPanel);
+        int returnVal = fileChooser.showOpenDialog(view.getJPanel());
 
         if (returnVal != JFileChooser.APPROVE_OPTION) {
-            conversionPanel.updateStatus(StatusType.ERROR, "Error: Invalid format. Please select a Z-Tree payoff file.");
+            view.updateStatus(StatusType.ERROR, "Error: Invalid format. Please select a Z-Tree payoff file.");
             return;
         }
 
-        conversionPanel.updatePayFileConverter(fileChooser.getSelectedFile());
+        view.updateFileSelection(fileChooser.getSelectedFile());
     }
 }
-
