@@ -1,7 +1,7 @@
 package edu.nyu.cess.payment.ui.listeners;
 
 import edu.nyu.cess.payment.io.ZTreePayFileConverter;
-import edu.nyu.cess.payment.ui.ZTreePayoffFileConversionPanel;
+import edu.nyu.cess.payment.ui.FileSelectionObserver;
 import edu.nyu.cess.payment.ui.StatusType;
 
 import java.awt.*;
@@ -15,18 +15,18 @@ import java.io.IOException;
  */
 public class ConvertPaymentFileListener implements ActionListener
 {
-    private ZTreePayoffFileConversionPanel ZTreePayoffFileConversionPanel;
+    private FileSelectionObserver fileSelectionObserver;
 
     private ZTreePayFileConverter zTreePayFileConverter = new ZTreePayFileConverter();
 
     /**
      * Instantiates a new Convert payment file listener.
      *
-     * @param ZTreePayoffFileConversionPanel the converter panel
+     * @param fileSelectionObserver the converter panel
      */
-    public ConvertPaymentFileListener(ZTreePayoffFileConversionPanel ZTreePayoffFileConversionPanel)
+    public ConvertPaymentFileListener(FileSelectionObserver fileSelectionObserver)
     {
-        this.ZTreePayoffFileConversionPanel = ZTreePayoffFileConversionPanel;
+        this.fileSelectionObserver = fileSelectionObserver;
     }
 
     /**
@@ -39,13 +39,13 @@ public class ConvertPaymentFileListener implements ActionListener
     {
         // Error: File Not Set
         if( ! zTreePayFileConverter.isFileInfoSet()){
-            ZTreePayoffFileConversionPanel.updateStatus(StatusType.ERROR, "Error: The file payoff file must be selected first.");
+            fileSelectionObserver.updateStatus(StatusType.ERROR, "Error: The file payoff file must be selected first.");
             return;
         }
 
         // Error: Failed To Covert File
         if( ! zTreePayFileConverter.convertPaymentToVoucherPDF()){
-            ZTreePayoffFileConversionPanel.updateStatus(StatusType.ERROR, "Error: Failed to convert payment file. Please check the format.");
+            fileSelectionObserver.updateStatus(StatusType.ERROR, "Error: Failed to convert payment file. Please check the format.");
             return;
         }
 
@@ -56,11 +56,11 @@ public class ConvertPaymentFileListener implements ActionListener
             }
             // Error: Unable to Open File
             catch (IOException ex) {
-                ZTreePayoffFileConversionPanel.updateStatus(StatusType.ERROR, "Error: Unable to auto open selected file.");
+                fileSelectionObserver.updateStatus(StatusType.ERROR, "Error: Unable to auto open selected file.");
             }
         }
 
-        ZTreePayoffFileConversionPanel.updateStatus(StatusType.INFO, "Output File: " + zTreePayFileConverter.getPDFName() + ".pdf");
+        fileSelectionObserver.updateStatus(StatusType.INFO, "Output File: " + zTreePayFileConverter.getPDFName() + ".pdf");
     }
 }
 

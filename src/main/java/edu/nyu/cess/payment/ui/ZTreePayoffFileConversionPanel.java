@@ -5,7 +5,7 @@ import edu.nyu.cess.payment.ui.buttons.CreatePDFButton;
 import edu.nyu.cess.payment.ui.buttons.OpenFileButton;
 import edu.nyu.cess.payment.ui.labels.*;
 import edu.nyu.cess.payment.ui.listeners.ConvertPaymentFileListener;
-import edu.nyu.cess.payment.ui.listeners.OpenPaymentFileListener;
+import edu.nyu.cess.payment.ui.listeners.SelectPaymentFileListener;
 
 import javax.swing.*;
 import java.awt.*;
@@ -14,7 +14,7 @@ import java.io.File;
 /**
  * The type Payoff converter panel.
  */
-public class ZTreePayoffFileConversionPanel extends JPanel implements FileSelectionView
+public class ZTreePayoffFileConversionPanel extends JPanel implements FileSelectionObserver
 {
 	private static final long serialVersionUID = 2853708307420292816L;
 
@@ -34,7 +34,7 @@ public class ZTreePayoffFileConversionPanel extends JPanel implements FileSelect
 
 		statusLabel = new StatusLabel(new InfoLabelProperty());
 
-		openPaymentFileButton = new OpenFileButton(new OpenPaymentFileListener(this));
+		openPaymentFileButton = new OpenFileButton(new SelectPaymentFileListener(this));
 		paymentFileToVoucherButton = new CreatePDFButton(new ConvertPaymentFileListener(this));
 
     	init();
