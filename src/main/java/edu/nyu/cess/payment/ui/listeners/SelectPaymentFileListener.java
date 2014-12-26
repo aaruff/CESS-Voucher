@@ -1,11 +1,11 @@
 package edu.nyu.cess.payment.ui.listeners;
 
 import edu.nyu.cess.payment.io.ConfigurationFile;
+import edu.nyu.cess.payment.io.ZTreeJFileChooser;
 import edu.nyu.cess.payment.ui.FileSelectionObserver;
 import edu.nyu.cess.payment.ui.StatusType;
 
 import javax.swing.*;
-import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -15,17 +15,13 @@ import java.awt.event.ActionListener;
 public class SelectPaymentFileListener implements ActionListener
 {
     private FileSelectionObserver view;
-    private JFileChooser fileChooser;
+    private ZTreeJFileChooser fileChooser;
 
     public SelectPaymentFileListener(FileSelectionObserver view)
     {
         this.view = view;
 
-        ConfigurationFile configFile = new ConfigurationFile();
-        fileChooser = new JFileChooser(configFile.getPayoffPath());
-        fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
-        fileChooser.addChoosableFileFilter(new FileNameExtensionFilter("Z-Tree Pay Files", "pay"));
-        fileChooser.setAcceptAllFileFilterUsed(true);
+        fileChooser = new ZTreeJFileChooser(configFile.getPayoffPath());
     }
 
     /**
