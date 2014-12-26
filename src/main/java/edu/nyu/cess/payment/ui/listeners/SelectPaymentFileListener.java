@@ -1,11 +1,10 @@
 package edu.nyu.cess.payment.ui.listeners;
 
-import edu.nyu.cess.payment.io.ConfigurationFile;
+import edu.nyu.cess.payment.exceptions.InvalidFileSelectedException;
 import edu.nyu.cess.payment.io.ZTreeJFileChooser;
 import edu.nyu.cess.payment.ui.FileSelectionObserver;
 import edu.nyu.cess.payment.ui.StatusType;
 
-import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -15,13 +14,12 @@ import java.awt.event.ActionListener;
 public class SelectPaymentFileListener implements ActionListener
 {
     private FileSelectionObserver view;
-    private ZTreeJFileChooser fileChooser;
+    private ZTreeJFileChooser fileChooser = new ZTreeJFileChooser();
 
     public SelectPaymentFileListener(FileSelectionObserver view)
     {
         this.view = view;
 
-        fileChooser = new ZTreeJFileChooser(configFile.getPayoffPath());
     }
 
     /**
@@ -31,13 +29,11 @@ public class SelectPaymentFileListener implements ActionListener
      */
     @Override
     public void actionPerformed(ActionEvent e) {
-        int returnVal = fileChooser.showOpenDialog(view.getJPanel());
-
-        if (returnVal != JFileChooser.APPROVE_OPTION) {
-            view.updateStatus(StatusType.ERROR, "Error: Invalid format. Please select a Z-Tree payoff file.");
-            return;
+        try {
+            view.updateFileSelection(fileChooser.openZTreePayoffDialogSelection(view.getJPanel()));
         }
-
-        view.updateFileSelection(fileChooser.getSelectedFile());
+        catch(InvalidFileSelectedException e) {
+            view.updateStatus(StatusType.ERROR, e.getMessage());
+        }
     }
 }
