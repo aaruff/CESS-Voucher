@@ -42,8 +42,13 @@ public class ZTreePayFileConverter
 			throw new FileNotSelectedException("Error: The file payoff file must be selected first.");
 
 		if (Desktop.isDesktopSupported()) {
-            File myFile = new File(getPDFLocation());
-            Desktop.getDesktop().open(myFile);
+			try {
+				File myFile = new File(getPDFLocation());
+				Desktop.getDesktop().open(myFile);
+			}
+			catch(IOException e) {
+				throw new IOException("Error: Unable to auto open selected file.");
+			}
 		}
 
 		FileReader fileReader = new FileReader(payoffFilePath);
