@@ -14,7 +14,7 @@ import java.io.File;
 /**
  * The type Payoff converter panel.
  */
-public class ZTreePayoffFileConversionPanel extends JPanel implements FileSelectionObserver
+public class ZTreePayoffFileConversionPanel extends JPanel implements FileSelectionObserver, FileConversionObserver
 {
 	private static final long serialVersionUID = 2853708307420292816L;
 
