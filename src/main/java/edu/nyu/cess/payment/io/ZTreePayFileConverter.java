@@ -1,14 +1,19 @@
 package edu.nyu.cess.payment.io;
 
 import edu.nyu.cess.payment.PDFGenerator;
+import edu.nyu.cess.payment.exceptions.FailedFileConversionException;
+import edu.nyu.cess.payment.exceptions.FileNotSelectedException;
+import edu.nyu.cess.payment.exceptions.NoSubjectsFoundException;
 import edu.nyu.cess.payment.ztree.Subject;
 
 import javax.print.*;
 import javax.print.attribute.HashPrintRequestAttributeSet;
 import javax.print.attribute.PrintRequestAttributeSet;
+import java.awt.*;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class ZTreePayFileConverter
@@ -31,23 +36,25 @@ public class ZTreePayFileConverter
 		return (new File(this.payoffFilePath)).getName();
 	}
 	
-	public boolean convertPaymentToVoucherPDF()
+	public void convertPaymentToVoucherPDF() throws FileNotSelectedException, FailedFileConversionException, IOException, NoSubjectsFoundException
 	{
-		FileReader fileReader = new FileReader(this.payoffFilePath);
-		PDFGenerator PDFGenerator = new PDFGenerator(this.payoffFilePath+".pdf");
+		if (isFileInfoSet() == false)
+			throw new FileNotSelectedException("Error: The file payoff file must be selected first.");
+
+		if (Desktop.isDesktopSupported()) {
+            File myFile = new File(getPDFLocation());
+            Desktop.getDesktop().open(myFile);
+		}
+
+		FileReader fileReader = new FileReader(payoffFilePath);
+		PDFGenerator PDFGenerator = new PDFGenerator(payoffFilePath + ".pdf");
 		
 		ArrayList<Subject> subjects = fileReader.getSubjects();
-	
-		if(subjects.size() == 0){
-			System.out.println("No subjects found.");
-		}
-		boolean result = PDFGenerator.generateDocument(subjects);
-		
-		if(!result){
-			System.out.println("Failed to generate pdf document.");
-			return false;
-		}
-		return true;
+		if(subjects.isEmpty())
+			throw new NoSubjectsFoundException();
+
+		if(PDFGenerator.generateDocument(subjects) == false)
+			throw new FailedFileConversionException("Error: Failed to convert payment file. Please check the format.");
 	}
 	
 	public boolean printVouchers(String fileToPrint)
