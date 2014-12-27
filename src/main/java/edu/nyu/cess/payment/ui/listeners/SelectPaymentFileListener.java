@@ -19,21 +19,21 @@ public class SelectPaymentFileListener implements ActionListener
     public SelectPaymentFileListener(FileSelectionObserver view)
     {
         this.view = view;
-
     }
 
     /**
      * Action performed.
      *
-     * @param e the e
+     * @param actionEvent The action event that triggered the action performed call.
      */
     @Override
-    public void actionPerformed(ActionEvent e) {
+    public void actionPerformed(ActionEvent actionEvent)
+    {
         try {
             view.updateFileSelection(fileChooser.openZTreePayoffDialogSelection(view.getJPanel()));
         }
-        catch(InvalidFileSelectedException e) {
-            view.updateStatus(StatusType.ERROR, e.getMessage());
+        catch(InvalidFileSelectedException exception) {
+            view.updateStatus(StatusType.ERROR, exception.getMessage());
         }
     }
 }
