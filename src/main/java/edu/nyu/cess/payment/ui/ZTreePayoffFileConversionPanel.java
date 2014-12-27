@@ -64,6 +64,13 @@ public class ZTreePayoffFileConversionPanel extends JPanel implements FileSelect
 		updateStatus(StatusType.INFO, "Opened: " + payoffFile.getName());
 	}
 
+	public void updateConversionRequest()
+	{
+		payFileConverter.convertPaymentToVoucherPDF();
+		// IO Exception
+		updateStatus(StatusType.ERROR, "Error: Unable to auto open selected file.");
+	}
+
 	/**
 	 * Init void.
 	 */
