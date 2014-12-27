@@ -1,8 +1,6 @@
 package edu.nyu.cess.payment.ui.listeners;
 
-import edu.nyu.cess.payment.io.ZTreePayFileConverter;
-import edu.nyu.cess.payment.ui.FileSelectionObserver;
-import edu.nyu.cess.payment.ui.StatusType;
+import edu.nyu.cess.payment.ui.FileConversionObserver;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -12,18 +10,16 @@ import java.awt.event.ActionListener;
  */
 public class ConvertPaymentFileListener implements ActionListener
 {
-    private FileSelectionObserver fileSelectionObserver;
-
-    private ZTreePayFileConverter zTreePayFileConverter = new ZTreePayFileConverter();
+    private FileConversionObserver fileConversionObserver;
 
     /**
      * Instantiates a new Convert payment file listener.
      *
-     * @param fileSelectionObserver the converter panel
+     * @param fileConversionObserver the converter panel
      */
-    public ConvertPaymentFileListener(FileSelectionObserver fileSelectionObserver)
+    public ConvertPaymentFileListener(FileConversionObserver fileConversionObserver)
     {
-        this.fileSelectionObserver = fileSelectionObserver;
+        this.fileConversionObserver = fileConversionObserver;
     }
 
     /**
@@ -34,8 +30,7 @@ public class ConvertPaymentFileListener implements ActionListener
     @Override
     public void actionPerformed(ActionEvent e)
     {
-
-        fileSelectionObserver.updateStatus(StatusType.INFO, "Output File: " + zTreePayFileConverter.getPDFName() + ".pdf");
+        fileConversionObserver.updateConversionRequest();
     }
 }
 
