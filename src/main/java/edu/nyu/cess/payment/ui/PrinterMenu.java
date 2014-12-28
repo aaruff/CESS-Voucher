@@ -32,29 +32,9 @@ public class PrinterMenu
         aboutMenu.add(authorItem);
         menuBar.add(aboutMenu);
         
-        JMenu textPositionMenu = new JMenu("Positioning");
-        JMenuItem textPositionItem = new JMenuItem("Set Text Positioning");
-        textPositionItem.addActionListener(new SetTextPosition());
-        textPositionMenu.add(textPositionItem);
-        menuBar.add(textPositionMenu);
-        
-        
         return menuBar;
 	}
-	
-	private class SetTextPosition implements ActionListener{
 
-		@Override
-		public void actionPerformed(ActionEvent arg0) {
-			String verticalPosition = (String)JOptionPane.showInputDialog(parentFrame, "Enter a positive integer to shift up, or a negative integer to shift down.","Vertical Shift",  JOptionPane.PLAIN_MESSAGE);
-			if(verticalPosition != null && !verticalPosition.equals("")){
-				System.out.println(Integer.valueOf(verticalPosition));
-				parentPanel.setVerticalShift(Integer.valueOf(verticalPosition));
-			}
-		}
-		
-	}
-	
 	private class HelpActionListener implements ActionListener{
 
 		@Override
