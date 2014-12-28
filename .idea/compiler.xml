@@ -25,5 +25,8 @@
         <module name="Payment-Voucher-Generator" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="Payment-Voucher-Generator" target="1.6" />
+    </bytecodeTargetLevel>
   </component>
 </project>
