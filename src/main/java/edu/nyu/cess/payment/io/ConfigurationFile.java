@@ -4,6 +4,7 @@ import org.apache.log4j.Logger;
 
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.Properties;
 
 
@@ -12,8 +13,7 @@ import java.util.Properties;
  */
 public class ConfigurationFile
 {
-	private String fileName = "config.properties";
-	private Properties properties;
+	private Properties configProperties;
 
 	private static final Logger LOG = Logger.getLogger(ConfigurationFile.class);
 
@@ -24,9 +24,10 @@ public class ConfigurationFile
      */
 	public ConfigurationFile()
 	{
-		properties = new Properties();
+		configProperties = new Properties();
 		try {
-			properties.load(new FileInputStream(this.fileName));
+			InputStream configInputStream = new FileInputStream("config.properties");
+			configProperties.load(configInputStream);
 		}
 		catch (IOException e)
 		{
@@ -42,7 +43,7 @@ public class ConfigurationFile
      */
 	public String getPayoffPath()
 	{
-    	String path = properties.getProperty("path");
+    	String path = configProperties.getProperty("path");
 
 		return (path == null) ? "" : path;
 	}
