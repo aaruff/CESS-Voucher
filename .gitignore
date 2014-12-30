@@ -11,4 +11,4 @@ hs_err_pid32950.log
 *.iws
 .idea/workspace.xml
 .idea/tasks.xml
-
+src/main/resources/config/dev/*
