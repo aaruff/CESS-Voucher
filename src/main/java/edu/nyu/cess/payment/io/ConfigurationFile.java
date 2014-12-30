@@ -2,7 +2,6 @@ package edu.nyu.cess.payment.io;
 
 import org.apache.log4j.Logger;
 
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
@@ -25,14 +24,19 @@ public class ConfigurationFile
 	public ConfigurationFile()
 	{
 		configProperties = new Properties();
-		try {
-			InputStream configInputStream = new FileInputStream("config.properties");
-			configProperties.load(configInputStream);
-		}
-		catch (IOException e)
-		{
+
+		InputStream configInputStream = ClassLoader.getSystemResourceAsStream("config.properties");
+		if (configInputStream == null) {
 			if (LOG.isDebugEnabled())
-                LOG.debug("Config file not found", e);
+				LOG.debug("Unable to find config file in classpath");
+		}
+		else {
+			try {
+				configProperties.load(configInputStream);
+			} catch (IOException e) {
+				if (LOG.isDebugEnabled())
+					LOG.debug("Config file not found", e);
+			}
 		}
 	}
 
