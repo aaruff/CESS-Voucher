@@ -38,8 +38,12 @@ public class Main
      */
     public static void createAndShowGUI(ZTreePayFileConverter payFileConverter)
     {
-        //Turn off metal's use of bold fonts
-        UIManager.put("swing.boldMetal", Boolean.FALSE);
+        try {
+            UIManager.setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName());
+        }
+        catch(Exception e) {
+            System.out.println("Error setting Java LAF: " + e);
+        }
 
         //Create and set up the window.
         JFrame frame = new JFrame("Z-Tree Payment Voucher Generator");
