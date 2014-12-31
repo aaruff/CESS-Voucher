@@ -1,8 +1,10 @@
 package edu.nyu.cess.payment;
 
+import edu.nyu.cess.payment.io.ConfigurationFile;
 import edu.nyu.cess.payment.io.ZTreePayFileConverter;
-import edu.nyu.cess.payment.ui.ZTreePayoffFileConversionPanel;
 import edu.nyu.cess.payment.ui.PrinterMenu;
+import edu.nyu.cess.payment.ui.ZTreePayoffFileConversionPanel;
+import org.apache.log4j.Logger;
 
 import javax.swing.*;
 
@@ -11,6 +13,7 @@ import javax.swing.*;
  */
 public class Main
 {
+    private static final Logger LOG = Logger.getLogger(ConfigurationFile.class);
 
     /**
      * Main void.
@@ -42,7 +45,7 @@ public class Main
             UIManager.setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName());
         }
         catch(Exception e) {
-            System.out.println("Error setting Java LAF: " + e);
+            LOG.debug("Error setting Java LAF: " + e);
         }
 
         //Create and set up the window.
@@ -53,7 +56,6 @@ public class Main
         ZTreePayoffFileConversionPanel ZTreePayoffFileConversionPanel = new ZTreePayoffFileConversionPanel(payFileConverter);
 
         PrinterMenu menu = new PrinterMenu(frame, ZTreePayoffFileConversionPanel);
-        //paymentPrinterPanel.setSize(500, 270);
         frame.add(ZTreePayoffFileConversionPanel);
         frame.setJMenuBar(menu.getJMenuBar());
 
