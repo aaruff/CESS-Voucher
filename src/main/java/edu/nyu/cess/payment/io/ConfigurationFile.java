@@ -25,10 +25,11 @@ public class ConfigurationFile
 	{
 		configProperties = new Properties();
 
-		InputStream configInputStream = ClassLoader.getSystemResourceAsStream("config.properties");
+		InputStream configInputStream = this.getClass().getClassLoader().getSystemResourceAsStream("config.properties");
 		if (configInputStream == null) {
-			if (LOG.isDebugEnabled())
-				LOG.debug("Unable to find config file in classpath");
+			if (LOG.isDebugEnabled()) {
+				LOG.debug("Unable to find config file in classpath:");
+			}
 		}
 		else {
 			try {
