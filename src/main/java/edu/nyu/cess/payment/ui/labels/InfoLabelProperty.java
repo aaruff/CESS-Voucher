@@ -9,9 +9,6 @@ import java.awt.*;
  */
 public class InfoLabelProperty extends LabelProperty
 {
-    private final String iconPath = "/images/info.png";
-    private final String iconDescription = "Information";
-
     /**
      * Instantiates a new Info label property.
      */
@@ -28,7 +25,7 @@ public class InfoLabelProperty extends LabelProperty
     private void init(String labelText)
     {
         this.labelText = labelText;
-        imageIcon = IconFactory.createImageIcon(iconPath, iconDescription);
+        imageIcon = IconFactory.produceInfoIcon();
         fontColor =  Color.BLACK;
     }
 }

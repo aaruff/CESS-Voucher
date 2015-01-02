@@ -98,7 +98,7 @@ public class ZTreePayoffFileConversionPanel extends JPanel implements FileSelect
 		constraint.insets = new Insets(0, 0, 10, 0);
         fileSelectionPanel.add(openPaymentFileButton, constraint);
         
-        JLabel nextIconLabel = new JLabel(IconFactory.createImageIcon("/resources/images/next.png", "Next"));
+        JLabel nextIconLabel = new JLabel(IconFactory.produceNextIcon());
 		constraint = new GridBagConstraints();
 		constraint.gridx = 1;
 		constraint.gridy = 2;

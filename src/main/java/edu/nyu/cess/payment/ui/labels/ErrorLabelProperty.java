@@ -6,13 +6,10 @@ import java.awt.*;
 
 public class ErrorLabelProperty extends LabelProperty
 {
-    private final String iconPath = "/images/error.png";
-    private final String iconDescription = "Error";
-
     public ErrorLabelProperty(String message)
     {
         labelText = message;
-        imageIcon = IconFactory.createImageIcon(iconPath, iconDescription);
+        imageIcon = IconFactory.errorIcon();
         fontColor =  Color.RED;
     }
 }
