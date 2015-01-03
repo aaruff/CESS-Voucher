@@ -11,7 +11,7 @@ class CustomDialog extends JDialog
                               PropertyChangeListener {
     private String typedText = null;
     private JTextField textField;
-    private ZTreePayoffFileConversionPanel dd;
+    private MainPanel dd;
 
     private String magicWord;
     private JOptionPane optionPane;
@@ -28,7 +28,7 @@ class CustomDialog extends JDialog
     }
 
     /** Creates the reusable dialog. */
-    public CustomDialog(JFrame aFrame, String aWord, ZTreePayoffFileConversionPanel parent) {
+    public CustomDialog(JFrame aFrame, String aWord, MainPanel parent) {
         super(aFrame, true);
         dd = parent;
 

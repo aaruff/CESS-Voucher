@@ -6,10 +6,10 @@ import java.awt.event.ActionListener;
 
 public class PrinterMenu
 {
-	ZTreePayoffFileConversionPanel parentPanel;
+	MainPanel parentPanel;
 	JFrame parentFrame;
 	
-	public PrinterMenu(JFrame frame, ZTreePayoffFileConversionPanel parentPanel){
+	public PrinterMenu(JFrame frame, MainPanel parentPanel){
 		this.parentPanel = parentPanel;
 		this.parentFrame = frame;
 	}
