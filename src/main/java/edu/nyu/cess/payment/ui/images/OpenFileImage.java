@@ -5,6 +5,8 @@ package edu.nyu.cess.payment.ui.images;
  */
 public class OpenFileImage extends IconImage
 {
-    private String path = "/images/file_open.png";
-    private String description = "Open File";
+    public OpenFileImage()
+    {
+        super("file_open.png", "Open File");
+    }
 }

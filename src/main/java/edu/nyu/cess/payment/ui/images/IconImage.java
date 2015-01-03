@@ -8,6 +8,12 @@ public abstract class IconImage
     private String path;
     private String description;
 
+    public IconImage(String path, String description)
+    {
+        this.path = path;
+        this.description = description;
+    }
+
     /**
      * Returns the icon path
      *

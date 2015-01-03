@@ -5,6 +5,8 @@ package edu.nyu.cess.payment.ui.images;
  */
 public class PdfImage extends IconImage
 {
-    private String path = "/images/cess.png";
-    private String description =  "CESS";
+    public PdfImage()
+    {
+        super("pdf_ico.png", "PDF");
+    }
 }
