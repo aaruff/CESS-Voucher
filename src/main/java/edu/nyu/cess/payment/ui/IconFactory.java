@@ -1,6 +1,7 @@
 package edu.nyu.cess.payment.ui;
 
 import edu.nyu.cess.payment.ui.images.*;
+import org.apache.log4j.Logger;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -12,6 +13,8 @@ import java.io.IOException;
  */
 public class IconFactory extends ImageIcon
 {
+    private static Logger LOG = Logger.getLogger(IconFactory.class);
+
     /**
      * Creates an image icon given a path and its description. If the path is invalid an initialized ImageIcon is
      * returned.
@@ -27,8 +30,14 @@ public class IconFactory extends ImageIcon
             Image image = ImageIO.read(IconFactory.class.getClassLoader().getResourceAsStream(iconImage.getPath()));
             return new ImageIcon(image, iconImage.getDescription());
         }
-        catch (Exception e)
+        catch (NullPointerException e)
         {
+            LOG.warn("Failed to find the following image in classpath: " + iconImage.getPath(), e);
+            return new ImageIcon();
+        }
+        catch (IOException e)
+        {
+            LOG.warn("IO Exception occurred while try to load: " + iconImage.getPath(), e);
             return new ImageIcon();
         }
     }
