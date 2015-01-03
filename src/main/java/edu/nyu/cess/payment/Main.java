@@ -1,12 +1,10 @@
 package edu.nyu.cess.payment;
 
 import edu.nyu.cess.payment.io.ConfigurationFile;
-import edu.nyu.cess.payment.io.ZTreePayFileConverter;
-import edu.nyu.cess.payment.ui.PrinterMenu;
-import edu.nyu.cess.payment.ui.ZTreePayoffFileConversionPanel;
 import org.apache.log4j.Logger;
 
 import javax.swing.*;
+import java.awt.*;
 
 /**
  * The type Main.
@@ -22,44 +20,42 @@ public class Main
      */
     public static void main(String args[])
     {
-		
-        //Schedule a job for the event dispatch thread:
-        //creating and showing this application's GUI.
-        SwingUtilities.invokeLater(new Runnable() {
-            public void run() {
+        SwingUtilities.invokeLater(new Runnable()
+        {
+            public void run()
+            {
+                Main main = new Main();
 
-                ZTreePayFileConverter payFileConverter = new ZTreePayFileConverter();
+                main.setupLookAndFeel();
 
-                createAndShowGUI(payFileConverter);
+                Controller controller = new Controller(main.getFrame());
+
+                controller.displayGui();
             }
         });
 	}
 
-
-    /**
-     * Create and show gUI.
-     */
-    public static void createAndShowGUI(ZTreePayFileConverter payFileConverter)
+    public void setupLookAndFeel()
     {
         try {
             UIManager.setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName());
         }
         catch(Exception e) {
-            LOG.debug("Error setting Java LAF: " + e);
+            LOG.debug("Error setting Java Look and Feel: " + e);
         }
+    }
 
-        //Create and set up the window.
-        JFrame frame = new JFrame("Z-Tree Payment Voucher Generator");
-        frame.setSize(500, 270);
+    public JFrame getFrame()
+    {
+        JFrame frame = new JFrame();
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        ZTreePayoffFileConversionPanel ZTreePayoffFileConversionPanel = new ZTreePayoffFileConversionPanel(payFileConverter);
+        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+        int height = (int) (screenSize.getHeight() * 2 / 3);
+        int width = (int) (screenSize.getWidth() * 2 / 3);
 
-        PrinterMenu menu = new PrinterMenu(frame, ZTreePayoffFileConversionPanel);
-        frame.add(ZTreePayoffFileConversionPanel);
-        frame.setJMenuBar(menu.getJMenuBar());
+        frame.setPreferredSize(new Dimension(width, height));
 
-        //Display the window.
-        frame.setVisible(true);
+        return frame;
     }
 }
