@@ -75,16 +75,16 @@ public class MainPanel extends JPanel implements FileSelectionObserver, FileConv
 	 */
 	public void layoutComponents()
 	{
-        JPanel mainLayoutPanel = new JPanel(new MigLayout());
+        JPanel mainLayoutPanel = new JPanel(new MigLayout("debug"));
         
-        mainLayoutPanel.add(new CESSLogoLabel());
+        mainLayoutPanel.add(new CESSLogoLabel(), "align right");
 		mainLayoutPanel.add(new HeaderLabel(), "wrap");
 
         mainLayoutPanel.add(new OpenFileButton(new SelectPaymentFileListener(this)));
-        mainLayoutPanel.add(new JLabel(IconFactory.produceNextIcon()));
+        mainLayoutPanel.add(new JLabel(IconFactory.produceNextIcon()), "align center");
         mainLayoutPanel.add(new CreatePDFButton(new ConvertPaymentFileListener(this)), "wrap");
         
-        mainLayoutPanel.add(statusLabel);
+        mainLayoutPanel.add(statusLabel, "span x, align center");
         
         add(mainLayoutPanel, BorderLayout.PAGE_START);
     }
