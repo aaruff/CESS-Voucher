@@ -1,8 +1,8 @@
 package edu.nyu.cess.payment.ui;
 
 import edu.nyu.cess.payment.io.ZTreePayFileConverter;
-import edu.nyu.cess.payment.ui.buttons.CreatePDFButton;
-import edu.nyu.cess.payment.ui.buttons.OpenFileButton;
+import edu.nyu.cess.payment.ui.buttons.PayFileToPdfButton;
+import edu.nyu.cess.payment.ui.buttons.PayFileSelectButton;
 import edu.nyu.cess.payment.ui.labels.*;
 import edu.nyu.cess.payment.ui.listeners.ConvertPaymentFileListener;
 import edu.nyu.cess.payment.ui.listeners.SelectPaymentFileListener;
@@ -75,14 +75,14 @@ public class MainPanel extends JPanel implements FileSelectionObserver, FileConv
 	 */
 	public void layoutComponents()
 	{
-        JPanel mainLayoutPanel = new JPanel(new MigLayout("debug"));
+        JPanel mainLayoutPanel = new JPanel(new MigLayout());
         
         mainLayoutPanel.add(new CESSLogoLabel(), "align right");
 		mainLayoutPanel.add(new HeaderLabel(), "wrap");
 
-        mainLayoutPanel.add(new OpenFileButton(new SelectPaymentFileListener(this)));
+        mainLayoutPanel.add(new PayFileSelectButton(new SelectPaymentFileListener(this)));
         mainLayoutPanel.add(new JLabel(IconFactory.produceNextIcon()), "align center");
-        mainLayoutPanel.add(new CreatePDFButton(new ConvertPaymentFileListener(this)), "wrap");
+        mainLayoutPanel.add(new PayFileToPdfButton(new ConvertPaymentFileListener(this)), "wrap");
         
         mainLayoutPanel.add(statusLabel, "span x, align center");
         
