@@ -6,13 +6,13 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
 
-public class CreatePDFButton extends JButton
+public class PayFileSelectButton extends JButton
 {
-    public CreatePDFButton(ActionListener actionListener)
+    public PayFileSelectButton(ActionListener actionListener)
     {
-        setText("Convert to Voucher PDF");
+        setText("Open File");
         setPreferredSize(new Dimension(190, 40));
-        setIcon(IconFactory.producePdfIcon());
+        setIcon(IconFactory.openFileIcon());
         addActionListener(actionListener);
     }
 }
