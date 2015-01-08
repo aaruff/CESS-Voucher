@@ -1,15 +1,19 @@
 package edu.nyu.cess.experiment.payment.voucher;
 
-import com.itextpdf.text.pdf.codec.wmf.Point;
-
-import java.util.HashMap;
+import java.util.ArrayList;
 
 public class Voucher
 {
-    private HashMap<Point, String> items = new HashMap<Point, String>();
+    private ArrayList<Item> items = new ArrayList<Item>();
 
-    public void addItem(Point point, String text)
+    public void addItem(Item item)
     {
-        items.put(point, text);
+        items.add(item);
     }
+
+    public ArrayList<Item> getItems()
+    {
+        return this.items;
+    }
+
 }
