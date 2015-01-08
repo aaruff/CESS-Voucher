@@ -50,7 +50,7 @@
                                 <transformer
                                         implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
                                     <manifestEntries>
-                                        <Main-Class>edu.nyu.cess.payment.Main</Main-Class>
+                                        <Main-Class>edu.nyu.cess.experiment.payment.voucher.printer.Main</Main-Class>
                                     </manifestEntries>
                                 </transformer>
                                 <transformer
@@ -74,7 +74,7 @@
                                 <transformer
                                         implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
                                     <manifestEntries>
-                                        <Main-Class>edu.nyu.cess.payment.Main</Main-Class>
+                                        <Main-Class>edu.nyu.cess.experiment.payment.voucher.printer.Main</Main-Class>
                                     </manifestEntries>
                                 </transformer>
                             </transformers>
@@ -102,7 +102,7 @@
                             <stayAlive>true</stayAlive>
                             <chdir></chdir>
                             <classPath>
-                                <mainClass>edu.nyu.cess.payment.Main</mainClass>
+                                <mainClass>edu.nyu.cess.experiment.payment.voucher.printer.Main</mainClass>
                                 <preCp>%EXEDIR%\config\</preCp>
                                 <addDependencies>true</addDependencies>
                             </classPath>
