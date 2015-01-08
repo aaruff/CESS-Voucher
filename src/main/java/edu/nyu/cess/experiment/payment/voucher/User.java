@@ -1,9 +1,9 @@
-package edu.nyu.cess.experiment;
+package edu.nyu.cess.experiment.payment.voucher;
 
 /**
- * The type Researcher.
+ * The type User.
  */
-public class Researcher
+public class User
 {
     private String name;
 
