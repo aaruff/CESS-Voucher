@@ -26,8 +26,8 @@ public class Main
                 Main main = new Main();
                 main.setupLookAndFeel();
 
-                Controller controller = new Controller(main.getFrame());
-                controller.displayGui();
+                ViewController viewController = new ViewController(main.getFrame());
+                viewController.displayGui();
             }
         });
 	}
