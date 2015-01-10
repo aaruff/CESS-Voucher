@@ -6,11 +6,11 @@ import edu.nyu.cess.experiment.payment.voucher.printer.ui.MainPanel;
 
 import javax.swing.*;
 
-public class Controller
+public class ViewController
 {
     private JFrame viewFrame;
 
-    public Controller(JFrame viewFrame)
+    public ViewController(JFrame viewFrame)
     {
         this.viewFrame = viewFrame;
     }
