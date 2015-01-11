@@ -6,19 +6,7 @@ import edu.nyu.cess.experiment.payment.currency.Dollar;
 public class Payoff {
 	private Currency amount;
 	
-	public Payoff(Double dollarAmount){
-		this.amount = new Dollar(dollarAmount);
-	}
-	
-	public Payoff(String dollarAmmount){
-		this.amount = new Dollar(Double.valueOf(dollarAmmount));
-	}
-	
-	public void setDollarAmount(Double dollarAmount){
-		this.amount = new Dollar(dollarAmount);
-	}
-	
-	public void setDollarAmount(String dollarAmount){
+	public Payoff(String dollarAmount){
 		this.amount = new Dollar(Double.valueOf(dollarAmount));
 	}
 	
@@ -26,11 +14,11 @@ public class Payoff {
 		return this.amount.getNumericalValue();
 	}
 	
-	public String getInCurrecy(){
+	public String getInDollars(){
 		return this.amount.getInCurrency();
 	}
 	
-	public String getAmountInWords(){
+	public String getDollarsInWords(){
 		return this.amount.getInWords();
 	}
 }
