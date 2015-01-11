@@ -22,11 +22,11 @@ public class Subject {
 	}
 	
 	public String getPayoffInCurrency(){
-		return this.payoff.getInCurrecy();
+		return this.payoff.getInDollars();
 	}
 	
 	public String getPayoffInWords(){
-		return this.payoff.getAmountInWords();
+		return this.payoff.getDollarsInWords();
 	}
 	
 	public String getName(){
