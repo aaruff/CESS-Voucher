@@ -12,17 +12,7 @@ public class Dollar implements Currency
 	private Integer dollarValue;
 	private Double centValue;
 	
-	private static final Double MAX_AMOUNT = 999.99;
-	
-	public Dollar(){
-		this.amount = 0.0;
-	}
-	
 	public Dollar(Double amount){
-		// 
-		if(amount > MAX_AMOUNT){
-			// Throw max amount exception
-		}
 		this.amount = amount;
 		// Split dollar amount into dollars and cents 
 		String[] tokenizedDollar = this.amount.toString().split("\\.");
@@ -212,11 +202,11 @@ public class Dollar implements Currency
 	}
 
 	@Override
-	public Double getNumericalValue() {
+	public Double getValue() {
 		return this.amount;
 	}
 	
-	public String getInCurrency(){
+	public String getValueWithCurrencySymbol(){
 		String currency = this.symbol + this.dollar + ".";
 		if(this.cents.length() >= 2){
 			currency = currency+this.cents.charAt(0)+this.cents.charAt(1);
@@ -243,5 +233,4 @@ public class Dollar implements Currency
 		this.dollarValue = Integer.parseInt(this.dollar, 10);
 		this.centValue = Double.parseDouble("."+this.cents);
 	}
-	
 }
