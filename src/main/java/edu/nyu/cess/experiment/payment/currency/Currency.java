@@ -1,8 +1,28 @@
 package edu.nyu.cess.experiment.payment.currency;
 
-public interface Currency {
+/**
+ * The Currency Interface.
+ */
+public interface Currency
+{
+	/**
+	 * Gets the currency amount in words.
+	 *
+	 * @return the currency in words
+     */
 	public String getInWords();
-	public Double getNumericalValue();
-	public String getInCurrency();
-	public String toString();
+
+	/**
+	 * Gets currency value.
+	 *
+	 * @return the numerical value
+     */
+	public Double getValue();
+
+	/**
+	 * Gets the formatted currency value
+	 *
+	 * @return the in currency
+     */
+	public String getValueWithCurrencySymbol();
 }
