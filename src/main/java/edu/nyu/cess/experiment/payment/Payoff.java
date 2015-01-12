@@ -11,11 +11,11 @@ public class Payoff {
 	}
 	
 	public Double getAmount(){
-		return this.amount.getNumericalValue();
+		return this.amount.getValue();
 	}
 	
 	public String getInDollars(){
-		return this.amount.getInCurrency();
+		return this.amount.getValueWithCurrencySymbol();
 	}
 	
 	public String getDollarsInWords(){
