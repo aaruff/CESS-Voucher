@@ -2,17 +2,19 @@ package edu.nyu.cess.experiment.payment.currency;
 
 import java.util.HashMap;
 
-public class Dollar implements Currency
+public class UnitedStatesDollar implements Currency
 {
 	private Double amount;
+
 	private static final String USD = "$";
+
 	private String type = "Dollars";
 	private String dollar;
 	private String cents;
 	private Integer dollarValue;
 	private Double centValue;
 	
-	public Dollar(Double amount){
+	public UnitedStatesDollar(Double amount){
 		this.amount = amount;
 		// Split dollar amount into dollars and cents 
 		String[] tokenizedDollar = this.amount.toString().split("\\.");

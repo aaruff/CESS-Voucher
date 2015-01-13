@@ -1,13 +1,13 @@
 package edu.nyu.cess.experiment.payment;
 
 import edu.nyu.cess.experiment.payment.currency.Currency;
-import edu.nyu.cess.experiment.payment.currency.Dollar;
+import edu.nyu.cess.experiment.payment.currency.UnitedStatesDollar;
 
 public class Payoff {
 	private Currency amount;
 	
 	public Payoff(String dollarAmount){
-		this.amount = new Dollar(Double.valueOf(dollarAmount));
+		this.amount = new UnitedStatesDollar(Double.valueOf(dollarAmount));
 	}
 	
 	public Double getAmount(){
