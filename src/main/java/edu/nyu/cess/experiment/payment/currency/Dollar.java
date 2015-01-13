@@ -5,7 +5,7 @@ import java.util.HashMap;
 public class Dollar implements Currency
 {
 	private Double amount;
-	private String symbol = "$";
+	private static final String USD = "$";
 	private String type = "Dollars";
 	private String dollar;
 	private String cents;
@@ -207,7 +207,7 @@ public class Dollar implements Currency
 	}
 	
 	public String getValueWithCurrencySymbol(){
-		String currency = this.symbol + this.dollar + ".";
+		String currency = this.USD + this.dollar + ".";
 		if(this.cents.length() >= 2){
 			currency = currency+this.cents.charAt(0)+this.cents.charAt(1);
 		}else if(this.cents.length() == 1){
@@ -220,7 +220,7 @@ public class Dollar implements Currency
 	}
 
 	public String toString(){
-		return this.symbol+amount.toString();
+		return this.USD +amount.toString();
 	}
 	
 	public void setAmount(Double amount){
