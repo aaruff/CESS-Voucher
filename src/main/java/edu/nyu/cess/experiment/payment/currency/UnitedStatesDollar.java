@@ -4,24 +4,22 @@ import java.util.HashMap;
 
 public class UnitedStatesDollar implements Currency
 {
-	private Double amount;
-
 	private static final String USD = "$";
+	private static final String DOLLAR_WHOLE_PART = "Dollars";
+	private static final String DOLLAR_FRACTIONAL_PART = "Cents";
 
-	private String type = "Dollars";
 	private String dollar;
 	private String cents;
+
 	private Integer dollarValue;
 	private Double centValue;
 	
 	public UnitedStatesDollar(Double amount){
-		this.amount = amount;
-		// Split dollar amount into dollars and cents 
-		String[] tokenizedDollar = this.amount.toString().split("\\.");
-		this.dollar = tokenizedDollar[0];
-		this.cents = tokenizedDollar[1];
-		this.dollarValue = Integer.parseInt(this.dollar, 10);
-		this.centValue = Double.parseDouble("00." + this.cents);
+		String[] tokenizedDollar = amount.toString().split("\\.");
+		dollar = tokenizedDollar[0];
+		cents = tokenizedDollar[1];
+		dollarValue = Integer.parseInt(dollar, 10);
+		centValue = Double.parseDouble("00." + cents);
 	}
 	
 	private HashMap<String, Integer> getDollarPlaceValues(Integer maxPlaceValue){
@@ -100,7 +98,7 @@ public class UnitedStatesDollar implements Currency
 		multiplesOfTen.put(8, "Eighty");
 		multiplesOfTen.put(9, "Ninety");
 		
-		HashMap<String, Integer> dollarPlaceValues = getDollarPlaceValues(this.dollar.length());
+		HashMap<String, Integer> dollarPlaceValues = getDollarPlaceValues(dollar.length());
 
 		// dollar amount contains 999-100 
 		if(dollarPlaceValues.containsKey("100") && dollarPlaceValues.get("100") >= 1 ){
@@ -127,8 +125,8 @@ public class UnitedStatesDollar implements Currency
 		}
 
 		// add the word "dollars" to the end of the string if there were any
-		if(this.dollarValue > 0){
-			dollarAmountInWords = dollarAmountInWords + " " + this.type;
+		if(dollarValue > 0){
+			dollarAmountInWords = dollarAmountInWords + " " + DOLLAR_WHOLE_PART;
 		}
 		
 		return dollarAmountInWords;
@@ -169,7 +167,7 @@ public class UnitedStatesDollar implements Currency
 		multiplesOfTen.put(8, "Eighty");
 		multiplesOfTen.put(9, "Ninety");
 		
-		HashMap<String, Integer> centPlaceValues = getCentPlaceValues(this.cents.length());
+		HashMap<String, Integer> centPlaceValues = getCentPlaceValues(cents.length());
 	
 		// Cents value is between 20 and 99
 		if(centPlaceValues.containsKey("10") && centPlaceValues.get("10") > 1){
@@ -187,8 +185,8 @@ public class UnitedStatesDollar implements Currency
 			centsInWords = centsInWords + ((!centsInWords.equals(""))?" ":"") + oneToNineteen.get(centPlaceValues.get("100"));
 		}
 	
-		if(this.centValue > 0){
-			centsInWords = centsInWords + " " + "Cents";
+		if(centValue > 0){
+			centsInWords = centsInWords + " " + DOLLAR_FRACTIONAL_PART;
 		}
 		
 		return centsInWords;
@@ -205,15 +203,15 @@ public class UnitedStatesDollar implements Currency
 
 	@Override
 	public Double getValue() {
-		return this.amount;
+		return amount;
 	}
 	
 	public String getValueWithCurrencySymbol(){
-		String currency = this.USD + this.dollar + ".";
-		if(this.cents.length() >= 2){
-			currency = currency+this.cents.charAt(0)+this.cents.charAt(1);
-		}else if(this.cents.length() == 1){
-			currency = currency+this.cents.charAt(0)+"0";
+		String currency = USD + dollar + ".";
+		if(cents.length() >= 2){
+			currency = currency+cents.charAt(0)+cents.charAt(1);
+		}else if(cents.length() == 1){
+			currency = currency+cents.charAt(0)+"0";
 		}else{
 			currency = currency+"00";
 		}
@@ -222,17 +220,6 @@ public class UnitedStatesDollar implements Currency
 	}
 
 	public String toString(){
-		return this.USD +amount.toString();
-	}
-	
-	public void setAmount(Double amount){
-		this.amount = amount;
-		
-		// Split dollar amount into dollars and cents 
-		String[] tokenizedDollar = this.amount.toString().split("\\.");
-		this.dollar = tokenizedDollar[0];
-		this.cents = tokenizedDollar[1];
-		this.dollarValue = Integer.parseInt(this.dollar, 10);
-		this.centValue = Double.parseDouble("."+this.cents);
+		return USD +amount.toString();
 	}
 }
