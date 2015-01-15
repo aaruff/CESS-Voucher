@@ -17,10 +17,6 @@ public class Subject {
 		this.payoff = payoff;
 	}
 	
-	public Double getPayoffAmount(){
-		return this.payoff.getAmount();
-	}
-	
 	public String getPayoffInCurrency(){
 		return this.payoff.getInDollars();
 	}
