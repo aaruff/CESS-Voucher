@@ -24,7 +24,7 @@ public class UnitedStatesDollar implements Currency
 	
 	private HashMap<String, Integer> getDollarPlaceValues(Integer maxPlaceValue){
 		HashMap<String, Integer> amountInPlaceValues = new HashMap<String, Integer>();
-		
+
 		// Dollar amount is in the hundredthsDollarValue
 		if(maxPlaceValue >= 3){
 			amountInPlaceValues.put("100", Integer.valueOf(String.valueOf(dollar.charAt(0))));
@@ -203,7 +203,7 @@ public class UnitedStatesDollar implements Currency
 
 	@Override
 	public Double getValue() {
-		return amount;
+		return dollarValue + centValue;
 	}
 	
 	public String getValueWithCurrencySymbol(){
@@ -220,6 +220,6 @@ public class UnitedStatesDollar implements Currency
 	}
 
 	public String toString(){
-		return USD +amount.toString();
+		return USD + (dollarValue + centValue);
 	}
 }
