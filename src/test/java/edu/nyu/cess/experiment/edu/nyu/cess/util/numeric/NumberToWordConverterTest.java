@@ -6,21 +6,21 @@ public class NumberToWordConverterTest extends TestCase
 {
     public void testWholeNumberToWords()
     {
-        assertTrue(NumberToWordConverter.wholePortionToWords(100000.99).equals(""));
-        assertTrue(NumberToWordConverter.wholePortionToWords(0.99).equals(""));
+        assertTrue(NumberToWordConverter.wholePortionInWords(100000.99).equals(""));
+        assertTrue(NumberToWordConverter.wholePortionInWords(0.99).equals(""));
 
-        assertTrue(NumberToWordConverter.wholePortionToWords(900.99).equals("Nine Hundred"));
-        assertTrue(NumberToWordConverter.wholePortionToWords(800.99).equals("Eight Hundred"));
-        assertTrue(NumberToWordConverter.wholePortionToWords(700.99).equals("Seven Hundred"));
-        assertTrue(NumberToWordConverter.wholePortionToWords(600.99).equals("Six Hundred"));
-        assertTrue(NumberToWordConverter.wholePortionToWords(500.99).equals("Five Hundred"));
-        assertTrue(NumberToWordConverter.wholePortionToWords(400.99).equals("Four Hundred"));
-        assertTrue(NumberToWordConverter.wholePortionToWords(300.99).equals("Three Hundred"));
-        assertTrue(NumberToWordConverter.wholePortionToWords(200.99).equals("Two Hundred"));
-        assertTrue(NumberToWordConverter.wholePortionToWords(100.99).equals("One Hundred"));
-        assertTrue(NumberToWordConverter.wholePortionToWords(900.99).equals("Nine Hundred"));
+        assertTrue(NumberToWordConverter.wholePortionInWords(900.99).equals("Nine Hundred"));
+        assertTrue(NumberToWordConverter.wholePortionInWords(800.99).equals("Eight Hundred"));
+        assertTrue(NumberToWordConverter.wholePortionInWords(700.99).equals("Seven Hundred"));
+        assertTrue(NumberToWordConverter.wholePortionInWords(600.99).equals("Six Hundred"));
+        assertTrue(NumberToWordConverter.wholePortionInWords(500.99).equals("Five Hundred"));
+        assertTrue(NumberToWordConverter.wholePortionInWords(400.99).equals("Four Hundred"));
+        assertTrue(NumberToWordConverter.wholePortionInWords(300.99).equals("Three Hundred"));
+        assertTrue(NumberToWordConverter.wholePortionInWords(200.99).equals("Two Hundred"));
+        assertTrue(NumberToWordConverter.wholePortionInWords(100.99).equals("One Hundred"));
+        assertTrue(NumberToWordConverter.wholePortionInWords(900.99).equals("Nine Hundred"));
 
-        assertTrue(NumberToWordConverter.wholePortionToWords(990.99).equals("Nine Hundred Ninety"));
+        assertTrue(NumberToWordConverter.wholePortionInWords(990.99).equals("Nine Hundred Ninety"));
     }
 
     public void testBaseTenPositionToWords()
