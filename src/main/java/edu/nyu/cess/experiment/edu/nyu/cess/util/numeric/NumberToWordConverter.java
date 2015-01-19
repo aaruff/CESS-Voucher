@@ -11,7 +11,7 @@ public class NumberToWordConverter
 
     private static final int BASE = 10;
 
-    private static final double MAX_WHOLE_NUMBER = 10000.0;
+    private static final double MAX_WHOLE_NUMBER = 999.0;
     private static final double MIN_WHOLE_NUMBER = 0.0;
 
     private static final int MAX_FRACTION_PLACE_VALUE = 100;
