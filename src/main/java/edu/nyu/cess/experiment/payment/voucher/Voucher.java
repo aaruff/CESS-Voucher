@@ -1,32 +1,31 @@
 package edu.nyu.cess.experiment.payment.voucher;
 
-import java.util.ArrayList;
+import com.itextpdf.text.BaseColor;
+import com.itextpdf.text.Chunk;
+import com.itextpdf.text.Document;
+import com.itextpdf.text.Font;
+import com.itextpdf.text.pdf.PdfWriter;
+import edu.nyu.cess.experiment.payment.Payoff;
 
 /**
  * The type Voucher.
  */
 public class Voucher
 {
-    private ArrayList<Item> items = new ArrayList<Item>();
+    private Document document;
 
-    /**
-     * Add item.
-     *
-     * @param item the item
-     */
-    public void addItem(Item item)
+    private PdfWriter pdfWriter;
+
+    private Payoff payoff;
+    private Chunk payment;
+    private Chunk total;
+    private Chunk paymentInWords;
+
+    private Voucher(Payoff payoff)
     {
-        items.add(item);
-    }
+        Font font = new Font(Font.FontFamily.HELVETICA, 8, Font.BOLD, BaseColor.BLACK);
+        payment = new Chunk(payoff.getInDollars(), font);
+        total = new Chunk(payoff.getInDollars(), font);
 
-    /**
-     * Gets items.
-     *
-     * @return the items
-     */
-    public ArrayList<Item> getItems()
-    {
-        return this.items;
     }
-
 }
