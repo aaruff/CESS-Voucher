@@ -1,34 +1,15 @@
 package edu.nyu.cess.experiment.edu.nyu.cess.util.numeric;
 
-public class NumberToWordConverter
+public class IntegerConverter
 {
-    private static final int ONES_EXPONENT = 0;
-    private static final int TENS_EXPONENT = 1;
-    private static final int HUNDREDTHS_EXPONENT = 2;
-    private static final int THOUSANDTHS_EXPONENT = 3;
-
-    private static final int MAX_WHOLE_EXPONENT = 3;
-
-    private static final int BASE = 10;
-
-    private static final int EXCEPTION_LOWER_BOUND = 11;
-    private static final int EXCEPTION_UPPER_BOUND = 19;
-
-    private static final int MAX_WHOLE_NUMBER = 999;
-    private static final int MIN_WHOLE_NUMBER = 0;
-
-    private static final String[] ONES = {"", "One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine"};
-    private static final String[] TENS = {"", "Ten", "Twenty", "Thirty", "Forty", "Fifty", "Sixty", "Seventy", "Eighty", "Ninety"};
-    private static final String[] TEENS = {"", "Eleven", "Twelve", "Thirteen", "Fourteen", "Fifteen", "Sixteen", "Seventeen", "Eighteen", "Nineteen"};
-    private static final String[] POWER_TEN = {"", "", "Hundred", "Thousand", "Million"};
-
     /**
      * Returns the whole part of the number in words.
      * @param number
      * @return
      */
-    public static String intToWords(int number)
+    public static String getAsWord(int number)
     {
+        final int MAX_WHOLE_NUMBER = 999, MIN_WHOLE_NUMBER = 0;
         if (number >= MAX_WHOLE_NUMBER || number < MIN_WHOLE_NUMBER) {
             return "";
         }
@@ -37,19 +18,18 @@ public class NumberToWordConverter
 
         int tempNumber = number;
         // Work backwards from the largest supported whole number place value (MAX_WHOLE_EXPONENT)
+        final int MAX_WHOLE_EXPONENT = 3;
         for (int exponent = MAX_WHOLE_EXPONENT; exponent >= 0; --exponent) {
 
-            // Numbers 11 to 19 are exceptions to the rule (E.g. 11 is written as "Eleven" instead of "Ten One")
-            if(tempNumber >= EXCEPTION_LOWER_BOUND && tempNumber <= EXCEPTION_UPPER_BOUND) {
+            if(isDependentPlaceValue(tempNumber)) {
                 wholePartInWords = wholePartInWords.concat(elevenToNineteenInWords(tempNumber));
                 exponent = 0;
             }
             else {
                 // Calculate the power of 10 starting from 10^MAX_WHOLE_EXPONENT
+                final int BASE = 10;
                 int powerOfTen = (int) Math.pow(BASE, exponent);
-
                 int coefficient = tempNumber / powerOfTen;
-
                 if (coefficient > 0) {
                     wholePartInWords = wholePartInWords.concat(baseTenMultipleToWords(coefficient, exponent) + " ");
                     tempNumber -= coefficient * powerOfTen;
@@ -57,6 +37,26 @@ public class NumberToWordConverter
             }
         }
         return wholePartInWords.trim();
+    }
+
+    /**
+     * Returns true if the number cannot be represented in words with only one place value, and is also not divisible
+     * by ten (i.e. numbers between 11 and 19).
+     *
+     * For example, 1 in 12 is a dependent place value, because it can't be described in words without inspecting
+     * the number in the ones place, namely 2.
+     * @param number
+     * @return
+     */
+    private static boolean isDependentPlaceValue(int number)
+    {
+        final int EXCEPTION_LOWER_BOUND = 11;
+        final int EXCEPTION_UPPER_BOUND = 19;
+        if(number >= EXCEPTION_LOWER_BOUND && number <= EXCEPTION_UPPER_BOUND) {
+            return true;
+        }
+
+        return false;
     }
 
     /**
@@ -68,8 +68,10 @@ public class NumberToWordConverter
      */
     private static String elevenToNineteenInWords(int number)
     {
+        final int BASE = 10;
         int onesValue = number - BASE;
 
+        final String[] TEENS = {"", "Eleven", "Twelve", "Thirteen", "Fourteen", "Fifteen", "Sixteen", "Seventeen", "Eighteen", "Nineteen"};
         return TEENS[onesValue];
     }
 
@@ -82,13 +84,22 @@ public class NumberToWordConverter
      */
     private static String baseTenMultipleToWords(int coefficient, int positionNumber)
     {
+
+        final int ONES_EXPONENT = 0;
+        final String[] ONES = {"", "One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine"};
         if (positionNumber == ONES_EXPONENT) {
             return ONES[coefficient];
         }
-        else if(positionNumber == TENS_EXPONENT) {
+
+        final int TENS_EXPONENT = 1;
+        final String[] TENS = {"", "Ten", "Twenty", "Thirty", "Forty", "Fifty", "Sixty", "Seventy", "Eighty", "Ninety"};
+        if(positionNumber == TENS_EXPONENT) {
             return TENS[coefficient];
         }
-        else if(positionNumber == HUNDREDTHS_EXPONENT || positionNumber == THOUSANDTHS_EXPONENT) {
+
+        final int HUNDREDTHS_EXPONENT = 2, THOUSANDTHS_EXPONENT = 3;
+        final String[] POWER_TEN = {"", "", "Hundred", "Thousand", "Million"};
+        if(positionNumber == HUNDREDTHS_EXPONENT || positionNumber == THOUSANDTHS_EXPONENT) {
             return ONES[coefficient] + " " + POWER_TEN[positionNumber];
         }
 
