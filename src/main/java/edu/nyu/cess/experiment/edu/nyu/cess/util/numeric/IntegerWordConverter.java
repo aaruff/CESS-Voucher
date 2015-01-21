@@ -22,17 +22,17 @@ public class IntegerWordConverter
         String wholePartInWords = "";
         final int MAX_EXPONENT = 3;
         // Work backwards from the largest supported whole number place value (MAX_EXPONENT)
-        for (int tNumber = number, exponent = MAX_EXPONENT; exponent >= 0; --exponent)
+        for (int decomposedNumber = number, exponent = MAX_EXPONENT; exponent >= 0; --exponent)
         {
-            if(isDependentPlaceValue(tNumber)) {
-                wholePartInWords += elevenToNineteenInWords(tNumber);
+            if(isDependentPlaceValue(decomposedNumber)) {
+                wholePartInWords += elevenToNineteenInWords(decomposedNumber);
                 exponent = 0;
             }
             else {
                 int coefficient = getBaseTenCoefficient(exponent, number);
                 if (coefficient > 0) {
                     wholePartInWords += baseTenMultipleToWords(coefficient, exponent) + " ";
-                    tNumber -= coefficient * getBaseTenValue(exponent);
+                    decomposedNumber -= coefficient * getBaseTenValue(exponent);
                 }
             }
         }
