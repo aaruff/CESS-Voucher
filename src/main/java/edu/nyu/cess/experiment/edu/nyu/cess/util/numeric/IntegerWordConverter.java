@@ -24,7 +24,7 @@ public class IntegerWordConverter
         // Work backwards from the largest supported whole number place value (MAX_EXPONENT)
         for (int decomposedNumber = number, exponent = MAX_EXPONENT; exponent >= 0; --exponent)
         {
-            if(isDependentPlaceValue(decomposedNumber)) {
+            if(isDependentPlaceValueNumber(decomposedNumber)) {
                 wholePartInWords += elevenToNineteenInWords(decomposedNumber);
                 exponent = 0;
             }
@@ -73,7 +73,7 @@ public class IntegerWordConverter
      * @param number the number
      * @return boolean boolean
      */
-    private static boolean isDependentPlaceValue(int number)
+    private static boolean isDependentPlaceValueNumber(int number)
     {
         final int LOWER_DEPENDENT_BOUND = 11, UPPER_DEPENDENT_BOUND = 19;
         return (number >= LOWER_DEPENDENT_BOUND && number <= UPPER_DEPENDENT_BOUND) ? true : false;
