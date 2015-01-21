@@ -31,7 +31,7 @@ public class IntegerWordConverter
             else {
                 int coefficient = getBaseTenCoefficient(exponent, number);
                 if (coefficient > 0) {
-                    wholePartInWords += getBaseTenMultipleAsWord(coefficient, exponent) + " ";
+                    wholePartInWords += getBaseTenNumberAsWord(coefficient, exponent) + " ";
                     decomposedNumber -= coefficient * getBaseTenValue(exponent);
                 }
             }
@@ -103,7 +103,7 @@ public class IntegerWordConverter
      * @param positionNumber base 10 positionNumber (c*10^p)
      * @return string string
      */
-    private static String getBaseTenMultipleAsWord(int coefficient, int positionNumber)
+    private static String getBaseTenNumberAsWord(int coefficient, int positionNumber)
     {
         final int ONES_EXPONENT = 0;
         final String[] ONES = {"", "One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine"};
