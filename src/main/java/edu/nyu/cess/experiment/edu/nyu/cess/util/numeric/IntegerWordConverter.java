@@ -1,11 +1,16 @@
 package edu.nyu.cess.experiment.edu.nyu.cess.util.numeric;
 
-public class IntegerConverter
+/**
+ * The type Integer word converter.
+ */
+public class IntegerWordConverter
 {
+    private final static int BASE = 10;
+
     /**
      * Returns the whole part of the number in words.
-     * @param number
-     * @return
+     * @param number the number
+     * @return as word
      */
     public static String getAsWord(int number)
     {
@@ -15,28 +20,48 @@ public class IntegerConverter
         }
 
         String wholePartInWords = "";
-
-        int tempNumber = number;
-        // Work backwards from the largest supported whole number place value (MAX_WHOLE_EXPONENT)
-        final int MAX_WHOLE_EXPONENT = 3;
-        for (int exponent = MAX_WHOLE_EXPONENT; exponent >= 0; --exponent) {
-
-            if(isDependentPlaceValue(tempNumber)) {
-                wholePartInWords = wholePartInWords.concat(elevenToNineteenInWords(tempNumber));
+        final int MAX_EXPONENT = 3;
+        // Work backwards from the largest supported whole number place value (MAX_EXPONENT)
+        for (int tNumber = number, exponent = MAX_EXPONENT; exponent >= 0; --exponent)
+        {
+            if(isDependentPlaceValue(tNumber)) {
+                wholePartInWords += elevenToNineteenInWords(tNumber);
                 exponent = 0;
             }
             else {
-                // Calculate the power of 10 starting from 10^MAX_WHOLE_EXPONENT
-                final int BASE = 10;
-                int powerOfTen = (int) Math.pow(BASE, exponent);
-                int coefficient = tempNumber / powerOfTen;
+                int coefficient = getBaseTenCoefficient(exponent, number);
                 if (coefficient > 0) {
-                    wholePartInWords = wholePartInWords.concat(baseTenMultipleToWords(coefficient, exponent) + " ");
-                    tempNumber -= coefficient * powerOfTen;
+                    wholePartInWords += baseTenMultipleToWords(coefficient, exponent) + " ";
+                    tNumber -= coefficient * getBaseTenValue(exponent);
                 }
             }
         }
+
         return wholePartInWords.trim();
+    }
+
+    /**
+     * Gets base ten coefficient.
+     *
+     * @param position the position
+     * @param number the number
+     * @return the base ten coefficient
+     */
+    private static int getBaseTenCoefficient(int position, int number)
+    {
+        int powerOfTen = (int) Math.pow(BASE, position);
+        return number / powerOfTen;
+    }
+
+    /**
+     * Gets base ten value.
+     *
+     * @param position the position
+     * @return the base ten value
+     */
+    private static int getBaseTenValue(int position)
+    {
+        return (int) Math.pow(BASE, position);
     }
 
     /**
@@ -45,30 +70,24 @@ public class IntegerConverter
      *
      * For example, 1 in 12 is a dependent place value, because it can't be described in words without inspecting
      * the number in the ones place, namely 2.
-     * @param number
-     * @return
+     * @param number the number
+     * @return boolean boolean
      */
     private static boolean isDependentPlaceValue(int number)
     {
-        final int EXCEPTION_LOWER_BOUND = 11;
-        final int EXCEPTION_UPPER_BOUND = 19;
-        if(number >= EXCEPTION_LOWER_BOUND && number <= EXCEPTION_UPPER_BOUND) {
-            return true;
-        }
-
-        return false;
+        final int LOWER_DEPENDENT_BOUND = 11, UPPER_DEPENDENT_BOUND = 19;
+        return (number >= LOWER_DEPENDENT_BOUND && number <= UPPER_DEPENDENT_BOUND) ? true : false;
     }
 
     /**
      * Converts exceptional numbers between 11 and 19 to words. Note: These are the only numbers that cannot
      * be printed a digit at a time, and must be considered together.
      *
-     * @param number
-     * @return
+     * @param number the number
+     * @return string string
      */
     private static String elevenToNineteenInWords(int number)
     {
-        final int BASE = 10;
         int onesValue = number - BASE;
 
         final String[] TEENS = {"", "Eleven", "Twelve", "Thirteen", "Fourteen", "Fifteen", "Sixteen", "Seventeen", "Eighteen", "Nineteen"};
@@ -80,11 +99,10 @@ public class IntegerConverter
      * (i.e. [1, 10] and [20-MAX_SUPPORTED].
      * @param coefficient base 10 coefficient (c*10)
      * @param positionNumber base 10 positionNumber (c*10^p)
-     * @return
+     * @return string string
      */
     private static String baseTenMultipleToWords(int coefficient, int positionNumber)
     {
-
         final int ONES_EXPONENT = 0;
         final String[] ONES = {"", "One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine"};
         if (positionNumber == ONES_EXPONENT) {
