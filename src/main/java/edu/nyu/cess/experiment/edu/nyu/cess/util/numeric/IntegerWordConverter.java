@@ -25,13 +25,13 @@ public class IntegerWordConverter
         for (int decomposedNumber = number, exponent = MAX_EXPONENT; exponent >= 0; --exponent)
         {
             if(isDependentPlaceValueNumber(decomposedNumber)) {
-                wholePartInWords += elevenToNineteenInWords(decomposedNumber);
+                wholePartInWords += getDependentPlaceValueNumberAsWord(decomposedNumber);
                 exponent = 0;
             }
             else {
                 int coefficient = getBaseTenCoefficient(exponent, number);
                 if (coefficient > 0) {
-                    wholePartInWords += baseTenMultipleToWords(coefficient, exponent) + " ";
+                    wholePartInWords += getBaseTenMultipleAsWord(coefficient, exponent) + " ";
                     decomposedNumber -= coefficient * getBaseTenValue(exponent);
                 }
             }
@@ -80,13 +80,15 @@ public class IntegerWordConverter
     }
 
     /**
-     * Converts exceptional numbers between 11 and 19 to words. Note: These are the only numbers that cannot
-     * be printed a digit at a time, and must be considered together.
+     * Converts dependent place value numbers to words.
+     *
+     * Dependent place value numbers are numbers that cannot be represented in words with only one place value,
+     * and is also not divisible by ten (i.e. The numbers [11, 19] inclusive).
      *
      * @param number the number
      * @return string string
      */
-    private static String elevenToNineteenInWords(int number)
+    private static String getDependentPlaceValueNumberAsWord(int number)
     {
         int onesValue = number - BASE;
 
@@ -101,7 +103,7 @@ public class IntegerWordConverter
      * @param positionNumber base 10 positionNumber (c*10^p)
      * @return string string
      */
-    private static String baseTenMultipleToWords(int coefficient, int positionNumber)
+    private static String getBaseTenMultipleAsWord(int coefficient, int positionNumber)
     {
         final int ONES_EXPONENT = 0;
         final String[] ONES = {"", "One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine"};
