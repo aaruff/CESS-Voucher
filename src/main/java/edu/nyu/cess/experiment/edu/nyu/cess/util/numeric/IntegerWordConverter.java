@@ -14,10 +14,8 @@ public class IntegerWordConverter
      */
     public static String getAsWord(int number)
     {
-        final int MAX_WHOLE_NUMBER = 999, MIN_WHOLE_NUMBER = 0;
-        if (number >= MAX_WHOLE_NUMBER || number < MIN_WHOLE_NUMBER) {
-            final String NO_TRANSLATION = "";
-            return NO_TRANSLATION;
+        if (number < 0 || number > 999) {
+            return "";
         }
 
         String translation = "";
@@ -38,6 +36,36 @@ public class IntegerWordConverter
         return translation.trim();
     }
 
+    /**
+     * Gets base ten number as word.
+     *
+     * @param position the position
+     * @param number the number
+     * @return the base ten number as word
+     */
+    private static String getBaseTenNumberAsWord(int position, int number)
+    {
+        int coefficient = getPositionValue(position, number);
+
+        switch(position) {
+            case 1:
+                return getOnesValueAsWord(coefficient);
+            case 2:
+                return getTensValueAsWord(coefficient);
+            case 3:
+                return getOnesValueAsWord(coefficient) + " Hundred";
+            default:
+                return "";
+        }
+    }
+
+    /**
+     * Gets base ten value.
+     *
+     * @param position the position
+     * @param number the number
+     * @return the base ten value
+     */
     private static int getBaseTenValue(int position, int number)
     {
         return getPositionValue(position, number) * getBaseValue(position);
@@ -62,6 +90,12 @@ public class IntegerWordConverter
         return number / powerOfTen;
     }
 
+    /**
+     * Gets base value.
+     *
+     * @param position the position
+     * @return the base value
+     */
     private static int getBaseValue(int position)
     {
         final int EXPONENT_OFFSET = 1;
@@ -113,32 +147,39 @@ public class IntegerWordConverter
         return TEENS[onesValue];
     }
 
-    private static String getOnesPlaceValueAsWord()
-
-    private static String getBaseTenNumberAsWord(int position, int number)
+    /**
+     * Gets ones value as word.
+     *
+     * @param coefficient the coefficient
+     * @return the ones value as word
+     */
+    private static String getOnesValueAsWord(int coefficient)
     {
-        final String NO_TRANSLATION = "";
-
-        int coefficient = getPositionValue(position, number);
-
         final String[] ONES = {"One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine"};
-        final int ONES_EXPONENT = 1;
-        if (position == ONES_EXPONENT) {
-            return (coefficient == 0) ? NO_TRANSLATION : ONES[coefficient];
+
+        if (coefficient < 1 || coefficient > 9) {
+            return "";
         }
 
-        final String[] TENS = {"", "Ten", "Twenty", "Thirty", "Forty", "Fifty", "Sixty", "Seventy", "Eighty", "Ninety"};
-        final int TENS_EXPONENT = 2;
-        if(position == TENS_EXPONENT) {
-            return TENS[coefficient];
+        final int ARRAY_OFFSET = 1;
+        return ONES[coefficient - ARRAY_OFFSET];
+    }
+
+    /**
+     * Gets tens value as word.
+     *
+     * @param coefficient the coefficient
+     * @return the tens value as word
+     */
+    private static String getTensValueAsWord(int coefficient)
+    {
+        final String[] TENS = {"Ten", "Twenty", "Thirty", "Forty", "Fifty", "Sixty", "Seventy", "Eighty", "Ninety"};
+
+        if (coefficient < 1 || coefficient > 9) {
+            return "";
         }
 
-        final String[] POWER_TEN = {"", "", "Hundred", "Thousand", "Million"};
-        final int HUNDREDTHS_EXPONENT = 3;
-        if(position == HUNDREDTHS_EXPONENT) {
-            return ONES[coefficient] + " " + POWER_TEN[position];
-        }
-
-        return "";
+        final int ARRAY_OFFSET = 1;
+        return TENS[coefficient - ARRAY_OFFSET];
     }
 }
