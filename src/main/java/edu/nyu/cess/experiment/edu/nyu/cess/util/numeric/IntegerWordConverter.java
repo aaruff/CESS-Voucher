@@ -16,28 +16,31 @@ public class IntegerWordConverter
     {
         final int MAX_WHOLE_NUMBER = 999, MIN_WHOLE_NUMBER = 0;
         if (number >= MAX_WHOLE_NUMBER || number < MIN_WHOLE_NUMBER) {
-            return "";
+            final String NO_TRANSLATION = "";
+            return NO_TRANSLATION;
         }
 
-        String wholePartInWords = "";
-        final int MAX_EXPONENT = 3;
-        // Work backwards from the largest supported whole number place value (MAX_EXPONENT)
-        for (int decomposedNumber = number, exponent = MAX_EXPONENT; exponent >= 0; --exponent)
+        String translation = "";
+        final int MAX_POSITION = 3, MIN_POSITION = 1;
+        for (int tempNumber = number, position = MAX_POSITION; position >= MIN_POSITION; --position)
         {
-            if(isDependentPlaceValueNumber(decomposedNumber)) {
-                wholePartInWords += getDependentPlaceValueNumberAsWord(decomposedNumber);
-                exponent = 0;
+            if(isDependentPlaceValueNumber(position, tempNumber)) {
+                translation += getDependentPlaceValueNumberAsWord(tempNumber);
+                break;
             }
-            else {
-                int coefficient = getBaseTenCoefficient(exponent, number);
-                if (coefficient > 0) {
-                    wholePartInWords += getBaseTenNumberAsWord(coefficient, exponent) + " ";
-                    decomposedNumber -= coefficient * getBaseTenValue(exponent);
-                }
+
+            if (getPositionValue(position, tempNumber) > 0) {
+                translation += getBaseTenNumberAsWord(position, tempNumber) + " ";
+                tempNumber -= getBaseTenValue(position, tempNumber);
             }
         }
 
-        return wholePartInWords.trim();
+        return translation.trim();
+    }
+
+    private static int getBaseTenValue(int position, int number)
+    {
+        return getPositionValue(position, number) * getBaseValue(position);
     }
 
     /**
@@ -47,21 +50,29 @@ public class IntegerWordConverter
      * @param number the number
      * @return the base ten coefficient
      */
-    private static int getBaseTenCoefficient(int position, int number)
+    private static int getPositionValue(int position, int number)
     {
-        int powerOfTen = (int) Math.pow(BASE, position);
+        int powerOfTen = getBaseValue(position);
+
+        if (powerOfTen > number) {
+            final int INDIVISIBLE_RESULT = 0;
+            return INDIVISIBLE_RESULT;
+        }
+
         return number / powerOfTen;
     }
 
-    /**
-     * Gets base ten value.
-     *
-     * @param position the position
-     * @return the base ten value
-     */
-    private static int getBaseTenValue(int position)
+    private static int getBaseValue(int position)
     {
-        return (int) Math.pow(BASE, position);
+        final int EXPONENT_OFFSET = 1;
+        int exponent = position - EXPONENT_OFFSET;
+
+        int powerOfTenValue = 1;
+        for (int i = 1; i <= exponent; ++i) {
+            powerOfTenValue *= BASE;
+        }
+
+        return powerOfTenValue;
     }
 
     /**
@@ -70,11 +81,17 @@ public class IntegerWordConverter
      *
      * For example, 1 in 12 is a dependent place value, because it can't be described in words without inspecting
      * the number in the ones place, namely 2.
+     * @param position the position to inspect
      * @param number the number
      * @return boolean boolean
      */
-    private static boolean isDependentPlaceValueNumber(int number)
+    private static boolean isDependentPlaceValueNumber(int position, int number)
     {
+        final int HUNDREDTHS_PLACE = 2;
+        if (position != HUNDREDTHS_PLACE) {
+            return false;
+        }
+
         final int LOWER_DEPENDENT_BOUND = 11, UPPER_DEPENDENT_BOUND = 19;
         return (number >= LOWER_DEPENDENT_BOUND && number <= UPPER_DEPENDENT_BOUND) ? true : false;
     }
@@ -96,31 +113,26 @@ public class IntegerWordConverter
         return TEENS[onesValue];
     }
 
-    /**
-     * Converts all numbers within the supported range that can be printed one base 10 position at a time
-     * (i.e. [1, 10] and [20-MAX_SUPPORTED].
-     * @param coefficient base 10 coefficient (c*10)
-     * @param positionNumber base 10 positionNumber (c*10^p)
-     * @return string string
-     */
-    private static String getBaseTenNumberAsWord(int coefficient, int positionNumber)
+    private static String getBaseTenNumberAsWord(int position, int number)
     {
-        final int ONES_EXPONENT = 0;
+        int coefficient = getPositionValue(position, number);
+
         final String[] ONES = {"", "One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine"};
-        if (positionNumber == ONES_EXPONENT) {
+        final int ONES_EXPONENT = 1;
+        if (position == ONES_EXPONENT) {
             return ONES[coefficient];
         }
 
-        final int TENS_EXPONENT = 1;
         final String[] TENS = {"", "Ten", "Twenty", "Thirty", "Forty", "Fifty", "Sixty", "Seventy", "Eighty", "Ninety"};
-        if(positionNumber == TENS_EXPONENT) {
+        final int TENS_EXPONENT = 2;
+        if(position == TENS_EXPONENT) {
             return TENS[coefficient];
         }
 
-        final int HUNDREDTHS_EXPONENT = 2, THOUSANDTHS_EXPONENT = 3;
         final String[] POWER_TEN = {"", "", "Hundred", "Thousand", "Million"};
-        if(positionNumber == HUNDREDTHS_EXPONENT || positionNumber == THOUSANDTHS_EXPONENT) {
-            return ONES[coefficient] + " " + POWER_TEN[positionNumber];
+        final int HUNDREDTHS_EXPONENT = 3;
+        if(position == HUNDREDTHS_EXPONENT) {
+            return ONES[coefficient] + " " + POWER_TEN[position];
         }
 
         return "";
