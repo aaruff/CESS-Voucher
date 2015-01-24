@@ -12,6 +12,10 @@ public class IntegerWordConverterTest extends TestCase
 
     public void testIntToWords()
     {
+        assertEquals("", IntegerWordConverter.getAsWord(1000));
+        assertEquals("", IntegerWordConverter.getAsWord(0));
+        assertEquals("", IntegerWordConverter.getAsWord(-1));
+
         for (int i = 1; i <= 999; ++i) {
             if (i < 10) {
                assertEquals(ONES[(i-1)], IntegerWordConverter.getAsWord(i));
