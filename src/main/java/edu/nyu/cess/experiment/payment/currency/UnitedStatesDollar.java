@@ -1,225 +1,66 @@
 package edu.nyu.cess.experiment.payment.currency;
 
-import java.util.HashMap;
+import edu.nyu.cess.experiment.edu.nyu.cess.util.numeric.IntegerWordConverter;
 
 public class UnitedStatesDollar implements Currency
 {
-	private static final String USD = "$";
-	private static final String DOLLAR_WHOLE_PART = "Dollars";
-	private static final String DOLLAR_FRACTIONAL_PART = "Cents";
+	private Integer dollars;
+	private Integer cents;
 
-	private String dollar;
-	private String cents;
-
-	private Integer dollarValue;
-	private Double centValue;
+	private Double usDollarAmount;
 	
-	public UnitedStatesDollar(Double amount){
-		String[] tokenizedDollar = amount.toString().split("\\.");
-		dollar = tokenizedDollar[0];
-		cents = tokenizedDollar[1];
-		dollarValue = Integer.parseInt(dollar, 10);
-		centValue = Double.parseDouble("00." + cents);
+	public UnitedStatesDollar(Double usDollarAmount)
+	{
+		this.usDollarAmount = usDollarAmount;
+
+		String[] splitAmount = usDollarAmount.toString().split("\\.");
+
+		final int DOLLAR = 0, CENTS = 1, RADIX = 10;
+		dollars = Integer.parseInt(splitAmount[DOLLAR], RADIX);
+		cents = Integer.parseInt(splitAmount[CENTS], RADIX);
 	}
 	
-	private HashMap<String, Integer> getDollarPlaceValues(Integer maxPlaceValue){
-		HashMap<String, Integer> amountInPlaceValues = new HashMap<String, Integer>();
-
-		// Dollar amount is in the hundredthsDollarValue
-		if(maxPlaceValue >= 3){
-			amountInPlaceValues.put("100", Integer.valueOf(String.valueOf(dollar.charAt(0))));
-			amountInPlaceValues.put("10", Integer.valueOf(String.valueOf(dollar.charAt(1))));
-			amountInPlaceValues.put("1", Integer.valueOf(String.valueOf(dollar.charAt(2))));
+	private String dollarToWords()
+	{
+		String dollarInWords = IntegerWordConverter.getAsWord(dollars);
+		if (dollarInWords.equals("")) {
+			return "";
 		}
 
-		// Dollar amount is in the TENS
-		if(maxPlaceValue == 2){
-			amountInPlaceValues.put("10",  Integer.valueOf(String.valueOf(dollar.charAt(0))));
-			amountInPlaceValues.put("1", Integer.valueOf(String.valueOf(dollar.charAt(1))));
-		}
+		String dollarSuffix = (dollars == 1) ? "Dollar" : "Dollars";
 
-		// Dollar amount is in the ONES
-		if(maxPlaceValue == 1){
-			amountInPlaceValues.put("1", Integer.valueOf(String.valueOf(dollar.charAt(0))));
-		}
-		return amountInPlaceValues;
+		return dollarInWords + " " + dollarSuffix;
 	}
 	
-	private HashMap<String, Integer> getCentPlaceValues(Integer maxPlaceValue){
-		HashMap<String, Integer> amountInPlaceValues = new HashMap<String, Integer>();
-		
-		// Cent amount is TENS
-		if(maxPlaceValue >= 2){
-			amountInPlaceValues.put("10",  Integer.valueOf(String.valueOf(cents.charAt(0))));
-			amountInPlaceValues.put("100", Integer.valueOf(String.valueOf(cents.charAt(1))));
+	private String centsToWords(){
+		String centsInWords = IntegerWordConverter.getAsWord(cents);
+		if (centsInWords.equals("")) {
+			return "";
 		}
 
-		// Cent amount is in the ONES
-		if(maxPlaceValue == 1){
-			amountInPlaceValues.put("10", Integer.valueOf(String.valueOf(cents.charAt(0))));
-			amountInPlaceValues.put("100", 0);
-		}
-		
-		return amountInPlaceValues;
-	}
-	
-	private String constructDollarsToWords(){
-		String dollarAmountInWords = "";
-		
-		HashMap<Integer, String> oneToNineteen = new HashMap<Integer, String>();
-		oneToNineteen.put(1, "One");
-		oneToNineteen.put(2, "Two");
-		oneToNineteen.put(3, "Three");
-		oneToNineteen.put(4, "Four");
-		oneToNineteen.put(5, "Five");
-		oneToNineteen.put(6, "Six");
-		oneToNineteen.put(7, "Seven");
-		oneToNineteen.put(8, "Eight");
-		oneToNineteen.put(9, "Nine");
-		oneToNineteen.put(10, "Ten");
-		oneToNineteen.put(11, "Eleven");
-		oneToNineteen.put(12, "Twelve");
-		oneToNineteen.put(13, "Thirteen");
-		oneToNineteen.put(14, "Fourteen");
-		oneToNineteen.put(15, "Fifteen");
-		oneToNineteen.put(16, "Sixteen");
-		oneToNineteen.put(17, "Seventeen");
-		oneToNineteen.put(18, "Eighteen");
-		oneToNineteen.put(19, "Nineteen");
-		
-		HashMap<Integer, String> multiplesOfTen = new HashMap<Integer, String>();
-		multiplesOfTen.put(1, "Ten");
-		multiplesOfTen.put(2, "Twenty");
-		multiplesOfTen.put(3, "Thirty");
-		multiplesOfTen.put(4, "Forty");
-		multiplesOfTen.put(5, "Fifty");
-		multiplesOfTen.put(6, "Sixty");
-		multiplesOfTen.put(7, "Seventy");
-		multiplesOfTen.put(8, "Eighty");
-		multiplesOfTen.put(9, "Ninety");
-		
-		HashMap<String, Integer> dollarPlaceValues = getDollarPlaceValues(dollar.length());
+		String centSuffix = (cents == 1) ? "Cent" : "Cents";
 
-		// dollar amount contains 999-100 
-		if(dollarPlaceValues.containsKey("100") && dollarPlaceValues.get("100") >= 1 ){
-			dollarAmountInWords = dollarAmountInWords + oneToNineteen.get(dollarPlaceValues.get("100")) + " Hundred";
-		}
-		
-		// dollar amount contains 20-99
-		if(dollarPlaceValues.containsKey("10") && dollarPlaceValues.get("10") >= 2){
-			dollarAmountInWords = dollarAmountInWords + ((!dollarAmountInWords.equals(""))?" ":"") + multiplesOfTen.get(dollarPlaceValues.get("10"));
-		}
-		
-		// dollar amount contains 10-19 
-		if(dollarPlaceValues.containsKey("10") && dollarPlaceValues.get("10") == 1){
-			Integer tensValue = dollarPlaceValues.get("10")*10 + dollarPlaceValues.get("1");
-			dollarAmountInWords = dollarAmountInWords + ((!dollarAmountInWords.equals(""))?" ":"") + oneToNineteen.get(tensValue);
-		}
-		
-		// dollar amount contains 1-9 
-		if(dollarPlaceValues.containsKey("1") && dollarPlaceValues.containsKey("10") && dollarPlaceValues.get("1") >= 1 && dollarPlaceValues.get("10") != 1){
-			dollarAmountInWords = dollarAmountInWords + ((!dollarAmountInWords.equals(""))?" ":"") + oneToNineteen.get(dollarPlaceValues.get("1"));
-		}
-		else if(dollarPlaceValues.containsKey("1") && !dollarPlaceValues.containsKey("10") && dollarPlaceValues.get("1") >= 1){
-			dollarAmountInWords = dollarAmountInWords + ((!dollarAmountInWords.equals(""))?" ":"") + oneToNineteen.get(dollarPlaceValues.get("1"));
-		}
-
-		// add the word "dollars" to the end of the string if there were any
-		if(dollarValue > 0){
-			dollarAmountInWords = dollarAmountInWords + " " + DOLLAR_WHOLE_PART;
-		}
-		
-		return dollarAmountInWords;
-	}
-	
-	private String constructCentsToWords(){
-		String centsInWords = "";
-		
-		HashMap<Integer, String> oneToNineteen = new HashMap<Integer, String>();
-		oneToNineteen.put(1, "One");
-		oneToNineteen.put(2, "Two");
-		oneToNineteen.put(3, "Three");
-		oneToNineteen.put(4, "Four");
-		oneToNineteen.put(5, "Five");
-		oneToNineteen.put(6, "Six");
-		oneToNineteen.put(7, "Seven");
-		oneToNineteen.put(8, "Eight");
-		oneToNineteen.put(9, "Nine");
-		oneToNineteen.put(10, "Ten");
-		oneToNineteen.put(11, "Eleven");
-		oneToNineteen.put(12, "Twelve");
-		oneToNineteen.put(13, "Thirteen");
-		oneToNineteen.put(14, "Fourteen");
-		oneToNineteen.put(15, "Fifteen");
-		oneToNineteen.put(16, "Sixteen");
-		oneToNineteen.put(17, "Seventeen");
-		oneToNineteen.put(18, "Eighteen");
-		oneToNineteen.put(19, "Nineteen");
-		
-		HashMap<Integer, String> multiplesOfTen = new HashMap<Integer, String>();
-		multiplesOfTen.put(1, "Ten");
-		multiplesOfTen.put(2, "Twenty");
-		multiplesOfTen.put(3, "Thirty");
-		multiplesOfTen.put(4, "Forty");
-		multiplesOfTen.put(5, "Fifty");
-		multiplesOfTen.put(6, "Sixty");
-		multiplesOfTen.put(7, "Seventy");
-		multiplesOfTen.put(8, "Eighty");
-		multiplesOfTen.put(9, "Ninety");
-		
-		HashMap<String, Integer> centPlaceValues = getCentPlaceValues(cents.length());
-	
-		// Cents value is between 20 and 99
-		if(centPlaceValues.containsKey("10") && centPlaceValues.get("10") > 1){
-			centsInWords = centsInWords + ((!centsInWords.equals(""))?" ":"") + multiplesOfTen.get(centPlaceValues.get("10"));
-		}
-
-		// Cents value is between  10 and 19
-		if(centPlaceValues.containsKey("10") && centPlaceValues.get("10") == 1){
-			Integer tensValue = centPlaceValues.get("10")*10 + centPlaceValues.get("100");
-			centsInWords = centsInWords + ((!centsInWords.equals(""))?" ":"") + oneToNineteen.get(tensValue);
-		}
-		
-		// Cents value is between 01 and 09
-		if(centPlaceValues.containsKey("100") && centPlaceValues.containsKey("10") && centPlaceValues.get("10") != 1 && centPlaceValues.get("100") > 0){
-			centsInWords = centsInWords + ((!centsInWords.equals(""))?" ":"") + oneToNineteen.get(centPlaceValues.get("100"));
-		}
-	
-		if(centValue > 0){
-			centsInWords = centsInWords + " " + DOLLAR_FRACTIONAL_PART;
-		}
-		
-		return centsInWords;
+		return centsInWords + " " + centSuffix;
 	}
 
 	@Override
 	public String getInWords(){
-		String dollarsInWords = constructDollarsToWords();
-		String centsInWords = constructCentsToWords();
+		String centsInWords = centsToWords();
+		String dollarsInWords = centsToWords();
 
-		return dollarsInWords + " " + centsInWords;
+		String connectivePhrase = (dollarsInWords.equals("")) ? "" : " And ";
+
+		return dollarToWords() + connectivePhrase + centsInWords;
 		
 	}
 
 	@Override
 	public Double getValue() {
-		return dollarValue + centValue;
+
+		return new Double(dollars) + (new Double(cents) / 100.00);
 	}
 	
 	public String getValueWithCurrencySymbol(){
-		String currency = USD + dollar + ".";
-		if(cents.length() >= 2){
-			currency = currency+cents.charAt(0)+cents.charAt(1);
-		}else if(cents.length() == 1){
-			currency = currency+cents.charAt(0)+"0";
-		}else{
-			currency = currency+"00";
-		}
-		
-		return currency;
-	}
-
-	public String toString(){
-		return USD + (dollarValue + centValue);
+		return "$ " + dollars + "." + cents;
 	}
 }
