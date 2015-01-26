@@ -1,24 +1,19 @@
 package edu.nyu.cess.experiment.payment;
 
-import edu.nyu.cess.experiment.payment.currency.Currency;
 import edu.nyu.cess.experiment.payment.currency.UnitedStatesDollar;
 
 public class Payoff {
-	private Currency amount;
-	
+	private UnitedStatesDollar payoff;
+
 	public Payoff(String dollarAmount){
-		this.amount = new UnitedStatesDollar(Double.valueOf(dollarAmount));
+		this.payoff = new UnitedStatesDollar(Double.valueOf(dollarAmount));
 	}
 	
-	public Double getAmount(){
-		return this.amount.getValue();
+	public String getPayoff(){
+		return this.payoff.getValueWithCurrencySymbol();
 	}
 	
-	public String getInDollars(){
-		return this.amount.getValueWithCurrencySymbol();
-	}
-	
-	public String getDollarsInWords(){
-		return this.amount.getInWords();
+	public String getPayoffInWords(){
+		return this.payoff.getInWords();
 	}
 }
