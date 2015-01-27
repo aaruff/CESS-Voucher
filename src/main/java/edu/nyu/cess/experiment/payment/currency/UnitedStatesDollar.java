@@ -13,15 +13,13 @@ public class UnitedStatesDollar
 	/**
 	 * Instantiates a new United states dollar.
 	 *
-	 * @param usDollarAmount the us dollar amount
+	 * @param dollars the dollars
+	 * @param cents the cents
      */
-	public UnitedStatesDollar(Double usDollarAmount)
+	public UnitedStatesDollar(Integer dollars, Integer cents)
 	{
-		String[] splitAmount = usDollarAmount.toString().split("\\.");
-
-		final int DOLLAR = 0, CENTS = 1, RADIX = 10;
-		dollars = Integer.parseInt(splitAmount[DOLLAR], RADIX);
-		cents = Integer.parseInt(splitAmount[CENTS], RADIX);
+		this.dollars = dollars;
+		this.cents = cents;
 	}
 
 	/**
