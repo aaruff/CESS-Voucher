@@ -42,6 +42,8 @@ public class UnitedStatesDollar
 	/**
 	 * Cents to words.
 	 *
+	 * Translates cents values from 0 to 99 to words
+	 *
 	 * @return the string
      */
 	private String centsToWords(){
@@ -61,12 +63,12 @@ public class UnitedStatesDollar
 	 * @return the string
      */
 	public String getInWords(){
+		String dollarsInWords = dollarToWords();
 		String centsInWords = centsToWords();
-		String dollarsInWords = centsToWords();
 
 		String connectivePhrase = (dollarsInWords.equals("")) ? "" : " And ";
 
-		return dollarToWords() + connectivePhrase + centsInWords;
+		return dollarsInWords + connectivePhrase + centsInWords;
 		
 	}
 
@@ -77,5 +79,17 @@ public class UnitedStatesDollar
      */
 	public String getValueWithCurrencySymbol(){
 		return "$ " + dollars + "." + cents;
+	}
+
+	/**
+	 * Sets amount.
+	 *
+	 * @param dollars the dollars
+	 * @param cents the cents
+     */
+	public void setAmount(Integer dollars, Integer cents)
+	{
+		this.dollars = dollars;
+		this.cents = cents;
 	}
 }
