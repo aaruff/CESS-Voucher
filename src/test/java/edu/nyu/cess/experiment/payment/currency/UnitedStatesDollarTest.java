@@ -14,7 +14,14 @@ public class UnitedStatesDollarTest extends TestCase
         assertEquals("Ten Cents", usd.getInWords());
         usd.setAmount(0, 1);
         assertEquals("One Cent", usd.getInWords());
-        //TODO: Test cent values > 99 (i.e., out of range)
+        usd.setAmount(0, 99);
+        assertEquals("Ninety Nine Cents", usd.getInWords());
+        usd.setAmount(100, 99);
+        assertEquals("One Hundred Dollars And Ninety Nine Cents", usd.getInWords());
+        usd.setAmount(901, 99);
+        assertEquals("Nine Hundred One Dollars And Ninety Nine Cents", usd.getInWords());
+        usd.setAmount(999, 99);
+        assertEquals("Nine Hundred Ninety Nine Dollars And Ninety Nine Cents", usd.getInWords());
     }
 
 }
