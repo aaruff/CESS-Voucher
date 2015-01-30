@@ -41,12 +41,16 @@ public class UnitedStatesDollar
 
 	/**
 	 * Cents to words.
-	 *
+     *
 	 * Translates cents values from 0 to 99 to words
 	 *
 	 * @return the string
      */
 	private String centsToWords(){
+        if (isNotBetween(cents, 0, 99)) {
+            return "";
+        }
+
 		String centsInWords = IntegerWordConverter.getAsWord(cents);
 		if (centsInWords.equals("")) {
 			return "";
@@ -56,6 +60,11 @@ public class UnitedStatesDollar
 
 		return centsInWords + " " + centSuffix;
 	}
+
+    private static boolean isNotBetween(int num, int lowerBound, int upperBound)
+    {
+        return num < lowerBound || num > upperBound;
+    }
 
 	/**
 	 * Get in words.
