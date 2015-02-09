@@ -22,6 +22,10 @@ public class UnitedStatesDollarTest extends TestCase
         assertEquals("Nine Hundred One Dollars And Ninety Nine Cents", usd.getInWords());
         usd.setAmount(999, 99);
         assertEquals("Nine Hundred Ninety Nine Dollars And Ninety Nine Cents", usd.getInWords());
+        usd.setAmount(109, 9999);
+        assertEquals("One Hundred Nine Dollars", usd.getInWords());
+        usd.setAmount(109, 9);
+        assertEquals("One Hundred Nine Dollars And Nine Cents", usd.getInWords());
     }
 
 }
