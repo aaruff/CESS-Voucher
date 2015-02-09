@@ -18,8 +18,8 @@ public class UnitedStatesDollar
      */
 	public UnitedStatesDollar(Integer dollars, Integer cents)
 	{
-		this.dollars = dollars;
-		this.cents = cents;
+        this.dollars = (dollars > 0 && dollars < 999) ? dollars : 0;
+        this.cents = (cents > 0 && cents < 99) ? cents : 0;
 	}
 
 	/**
@@ -75,7 +75,7 @@ public class UnitedStatesDollar
 		String dollarsInWords = dollarToWords();
 		String centsInWords = centsToWords();
 
-		String connectivePhrase = (dollarsInWords.equals("")) ? "" : " And ";
+		String connectivePhrase = (dollarsInWords.equals("") || centsInWords.equals("")) ? "" : " And ";
 
 		return dollarsInWords + connectivePhrase + centsInWords;
 		
