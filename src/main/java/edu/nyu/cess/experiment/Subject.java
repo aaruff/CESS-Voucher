@@ -12,17 +12,12 @@ public class Subject {
 		this.payoff = new Payoff(payoff);
 	}
 	
-	public Subject(String name, Payoff payoff){
-		this.name = name;
-		this.payoff = payoff;
-	}
-	
 	public String getPayoffInCurrency(){
-		return this.payoff.getInDollars();
+		return this.payoff.getUsd();
 	}
 	
 	public String getPayoffInWords(){
-		return this.payoff.getDollarsInWords();
+		return this.payoff.getPayoffInWords();
 	}
 	
 	public String getName(){
