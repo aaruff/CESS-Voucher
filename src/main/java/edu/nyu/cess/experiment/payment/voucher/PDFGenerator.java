@@ -20,30 +20,12 @@ public class PDFGenerator
 	private int verticalShift;
 	private int horizontalShift;
 	
-	public PDFGenerator(){
-		this.document = new Document(PageSize.A4, 50, 50, 50, 50);
-		this.verticalShift = 0;
-		this.horizontalShift = 0;
-	}
-	public PDFGenerator(int horizontalShift, int verticalShift){
-		this.verticalShift = verticalShift;
-		this.horizontalShift = horizontalShift; 
-	}
-	
 	public PDFGenerator(String outputFile){
 		this.verticalShift = 0;
 		this.horizontalShift = 0;
 		this.outputFile = outputFile;
 		this.document = new Document(PageSize.A4, 50, 50, 50, 50);
 	}
-	
-	public PDFGenerator(String outputFile, int horizontalShift, int verticalShift){
-		this.verticalShift = verticalShift;
-		this.horizontalShift = horizontalShift;
-		this.outputFile = outputFile;
-		this.document = new Document(PageSize.A4, 50, 50, 50, 50);
-	}
-	
 	
 	public boolean generateDocument(ArrayList<Subject> subjects){
 		FileOutputStream fileOutputStream;
