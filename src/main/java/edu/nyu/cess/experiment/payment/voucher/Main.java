@@ -23,29 +23,9 @@ public class Main
         {
             public void run()
             {
-                Main main = new Main();
-                main.setupLookAndFeel();
-
-                ViewController viewController = new ViewController(main.getFrame());
-                viewController.displayGui();
+            VoucherPrinterView voucherPrinterView = new VoucherPrinterView();
+            voucherPrinterView.display();
             }
         });
 	}
-
-    public void setupLookAndFeel()
-    {
-        try {
-            UIManager.setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName());
-        }
-        catch(Exception e) {
-            LOG.debug("Error setting Java Look and Feel: " + e);
-        }
-    }
-
-    public JFrame getFrame()
-    {
-        JFrame frame = new JFrame();
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        return frame;
-    }
 }
