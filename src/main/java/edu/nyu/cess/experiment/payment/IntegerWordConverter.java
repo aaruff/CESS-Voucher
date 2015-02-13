@@ -1,4 +1,4 @@
-package edu.nyu.cess.experiment.edu.nyu.cess.util.numeric;
+package edu.nyu.cess.experiment.payment;
 
 /**
  * The type Integer word converter.
@@ -8,7 +8,9 @@ public class IntegerWordConverter
     private final static int BASE = 10;
 
     /**
-     * Returns the whole part of the number in words.
+     * Returns the whole part of the number in words given an integer value between 0 and 999.
+     * Values outside this range are not supported.
+     *
      * @param number the number
      * @return as word
      */
